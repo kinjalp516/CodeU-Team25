@@ -30,3 +30,40 @@ nav li {
   display: inline-block;
   margin-right: 10px
 }
+
+/* 'Kinjal' name formatting */
+.name {
+    font-family: 'Roboto', cursive;
+    font-size: 40px;
+}
+
+/* Polaroid div */
+.polaroid {
+	display: flex;
+    width: 900px;
+    margin-top: -40px;
+    margin-bottom: 20px;
+}
+    	
+ figure.polaroidSquare {
+    width: 300px;
+  	background-color: white;
+  	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  	margin-bottom: 25px;
+  	padding: 15px;
+}
+    	
+figure.heading {
+    width: 300px;
+}
+    	
+img.photoKinjal {
+   background-color: #E3E3E3;
+}
+
+/* Caption formatting */
+figcaption.caption {
+	font-family: 'Just Me Again Down Here', cursive;
+    font-size: 27px;
+    text-align: center;
+}
