@@ -19,7 +19,8 @@ body {
   max-width: 600px;
 }
 
-p { margin: 0; }
+
+p { margin:0 }
 
 /* Remove bullet points from navigation bar. */
 nav ul {
