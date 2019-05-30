@@ -19,6 +19,7 @@ body {
   max-width: 600px;
 }
 
+
 p { margin:0 }
 
 /* Remove bullet points from navigation bar. */
@@ -31,4 +32,42 @@ nav ul {
 nav li {
   display: inline-block;
   margin-right: 10px
+}
+
+
+/* Polaroid div */
+.polaroid {
+	display: flex;
+    width: 3000px;
+    margin-bottom: -20px;
+}
+    	
+ figure.polaroidSquare {
+    width: 220px;
+  	background-color: white;
+  	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  	margin-bottom: 50px;
+  	margin-right: 60px;
+  	padding: 15px;
+}
+    	
+figure.heading {
+    width: 220px;
+    margin-top: 10px;
+    margin-right: 60px;
+}
+    	
+img.photoKinjal {
+   background-color: #E3E3E3;
+}
+
+/* Caption formatting */
+figcaption.caption {
+	font-family: 'Just Me Again Down Here', cursive;
+    font-size: 27px;
+    text-align: center;
+}
+
+p.center {
+	text-align: center;
 }
