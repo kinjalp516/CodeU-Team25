@@ -20,21 +20,28 @@ limitations under the License.
     <meta charset="UTF-8">
     <title>CodeU 2019 Starter Project</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="/js/navigation-loader.js"></script>
   </head>
   <body onload="addLoginOrLogoutLinkToNavigation();">
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Message Feed</a></li>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <ul class="navbar-nav" id="navigation">
+        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
       </ul>
     </nav>
-    <h1>CodeU Starter Project</h1>
-    <p>This is the CodeU starter project. Click the links above to login and visit your page.
-    You can post messages on your page, and you can visit other user pages if you have
-    their URL.</p>
-    <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-    You could start by modifying this page to tell the world more about your team.</p>
+
+    <div class="col px-ml-5 pt-5">
+      <div class="col pt-3"></div>
+      <h1>CodeU Starter Project</h1>
+      <p>This is the CodeU starter project. Click the links above to login and visit your page.
+      You can post messages on your page, and you can visit other user pages if you have
+      their URL.</p>
+      <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
+      You could start by modifying this page to tell the world more about your team.</p>
+    </div>
+    
   </body>
 </html>
