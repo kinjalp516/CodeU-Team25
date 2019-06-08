@@ -45,3 +45,10 @@
 .hidden {
   display: none;
 }
+
+/* Used to edit the size of the images when posted in message feed */
+.message-body img {
+  display: block;
+  margin-top: 25px;
+  max-width: 75%;
+}
