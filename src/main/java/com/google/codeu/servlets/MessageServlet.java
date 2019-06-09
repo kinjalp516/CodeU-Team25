@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
@@ -65,10 +69,28 @@ public class MessageServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
+  public boolean validURLCheck (String messageURL) {
+	  /* Try creating a valid URL */
+	  try {
+		    URL url = new URL(messageURL);
+		    URLConnection conn = url.openConnection();
+		    conn.connect();
+		    return true;
+		} catch (MalformedURLException e) {
+		    // the URL is not in a valid form
+			return false;
+		} catch (IOException e) {
+		    // the connection couldn't be established
+			return false;
+		}
+  }
+  
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+	
+	Message message; 
+	
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
@@ -78,7 +100,37 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-    Message message = new Message(user, text);
+    String replaced = "";
+    
+    for (String word : text.split(" ")) {
+
+    	if (validURLCheck(word)) {
+    		String replacement;
+    		String regex;
+    		
+			//means is a video
+    		//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
+    		
+    		if (word.contains("https://www.youtube.com")) {
+    			//replacement = "<iframe src=\"$1\">";
+    			//regex = "(https?://youtube.com/watch?v=\\S+";
+    			String embed = word.substring(32, word.length());
+    			word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
+    		}
+    		
+    		//means is an image or another URL
+    		else {
+    	    	replacement = "<img src=\"$1\" />";
+    			regex = "(https?://\\S+\\.(png|jpg|gif))";
+    			word = word.replaceAll(regex, replacement);
+    		}
+    	}
+    	
+    	replaced = replaced + " " + word;
+    }
+    
+	message = new Message(user, replaced);
+    
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);

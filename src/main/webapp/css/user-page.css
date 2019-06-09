@@ -45,3 +45,22 @@
 .hidden {
   display: none;
 }
+
+/* Used to edit the size of the images when posted in message feed */
+.message-body img {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  max-width: 40%;
+  border-radius: 15px;
+  border-width: 1px;
+  border-color: #ECEAEA;
+}
+
+/* Used to edit the size of the youtube videos when posted in message feed */
+.message-body iframe {
+	margin-top: 15px;
+  	margin-bottom: 15px;
+	width: 350px;
+	height: 200px;
+} 
