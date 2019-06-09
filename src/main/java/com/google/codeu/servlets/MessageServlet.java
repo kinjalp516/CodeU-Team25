@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import java.net.URL;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -65,10 +66,22 @@ public class MessageServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
+  public boolean validURLCheck (String messageURL) {
+	  try {
+		  URL url = new URL(messageURL);
+	      url.toURI();
+	      return true; 
+	  } catch (Exception exception) {
+	        return false;
+	  	}
+  }
+  
   /** Stores a new {@link Message}. */
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+	
+	Message message; 
+	
     UserService userService = UserServiceFactory.getUserService();
     if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/index.html");
@@ -78,11 +91,18 @@ public class MessageServlet extends HttpServlet {
     String user = userService.getCurrentUser().getEmail();
     String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-    String regex = "(https?://\\S+\\.(png|jpg))";
-    String replacement = "<img src=\"$1\" />";
-    String textWithImagesReplaced = text.replaceAll(regex, replacement);
+    String regex = "(https?://\\S+\\.(png|jpg|gif|tif))";
     
-    Message message = new Message(user, textWithImagesReplaced);
+    if (validURLCheck (regex)) {
+	    String replacement = "<img src=\"$1\" />";
+	    String textWithImagesReplaced = text.replaceAll(regex, replacement);
+	    message = new Message(user, textWithImagesReplaced);
+    }
+	
+    else {
+    	message = new Message(user, text);
+    }
+    
     datastore.storeMessage(message);
 
     response.sendRedirect("/user-page.html?user=" + user);
