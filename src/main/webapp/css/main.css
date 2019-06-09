@@ -15,9 +15,9 @@
  */
 
 /* Prevent the page from becoming too wide. */
-body {
+/* body {
   max-width: 1000px;
-}
+} */
 
 
 p { margin:0 }
@@ -72,20 +72,25 @@ p.center {
 	text-align: center;
 }
 
+.carousel {
+  width: 100%
+}
 
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   bottom: 3rem;
   z-index: 10;
 }
+
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 32rem;
+  height:auto/*50rem*/;
+  padding-top: 56.25%;
 }
 .carousel-item > img {
   position: absolute;
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 32rem;
+  height: auto;
 }

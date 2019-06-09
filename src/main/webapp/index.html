@@ -18,6 +18,13 @@ limitations under the License.
     <title>CodeU 2019 Starter Project</title>
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E"></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="/js/navigation-loader.js"></script>
   	<script>
     /** Creates a map that shows landmarks around Google. */
     function createMap(){
@@ -57,32 +64,19 @@ limitations under the License.
     	}
   	</style>
 </head>
-	<body onload="createMap();">
-  		<h1>Google Tour</h1>
-  		<p>Here are a few of my favorite places at Google!</p>
-  		<div id="map"></div>
-    		<br />
+  <body onload="addLoginOrLogoutLinkToNavigation(); createMap();">
+    <div class="container-fluid">	
     
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav" id="navigation">
+          <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
+          <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
+        </ul>
+      </nav>
 
-    <script src="/js/navigation-loader.js"></script>
-  </head>
-  <body onload="addLoginOrLogoutLinkToNavigation();">
-
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-      <ul class="navbar-nav" id="navigation">
-        <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
-        <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
-      </ul>
-    </nav>
-
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div id="myCarousel" class="carousel slide mx-auto" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -90,7 +84,7 @@ limitations under the License.
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="d-block w-100" src="https://cdn1.medicalnewstoday.com/content/images/articles/320/320590/woman-looking-at-phone-in-gym.jpg">
+          <img class="d-block w-100" src="https://www.stay-trained.com/wp-content/uploads/2018/04/Supplement-Fitness.jpg">
           <div class="container">
             <div class="carousel-caption d-block">
               <h1 class="text-white bg-dark">CodeU Starter Project</h1>              
@@ -106,7 +100,7 @@ limitations under the License.
           </div>
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="https://www.stay-trained.com/wp-content/uploads/2018/04/Supplement-Fitness.jpg">
+          <img class="d-block w-100" src="https://cdn1.medicalnewstoday.com/content/images/articles/320/320590/woman-looking-at-phone-in-gym.jpg">
           <div class="container">
             <div class="carousel-caption d-block">
               <h1 class="text-white bg-dark">CodeU Starter Project</h1>  
@@ -124,12 +118,18 @@ limitations under the License.
       </a>
     </div>
 
-    <div class="col px-ml-5 pt-2">
-      <p>This is the CodeU starter project. Click the links above to login and visit your page.
-      You can post messages on your page, and you can visit other user pages if you have
-      their URL.</p>
-      <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
-      You could start by modifying this page to tell the world more about your team.</p>
-    </div>  
+      <div class="col px-ml-5 pt-2">
+        <p>This is the CodeU starter project. Click the links above to login and visit your page.
+        You can post messages on your page, and you can visit other user pages if you have
+        their URL.</p>
+        <p>This is your code now! Feel free to make changes, and don't be afraid to get creative!
+        You could start by modifying this page to tell the world more about your team.</p>
+      </div>  
+
+      <h1>Google Tour</h1>
+        <p>Here are a few of my favorite places at Google!</p>
+        <div id="map"></div>
+          <br />
+  </div>
   </body>
 </html>

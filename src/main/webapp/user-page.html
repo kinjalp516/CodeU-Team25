@@ -21,42 +21,44 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
   </head>
 
   <body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav" id="navigation">
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+          <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
+        </ul>
+      </nav>
+      
+      <h1 id="page-title">User Page</h1>
 
-    <nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Message Feed</a></li>
-      </ul>
-    </nav>
-    
-    <h1 id="page-title">User Page</h1>
+      <div id="about-me-container">Loading...</div>
 
-    <div id="about-me-container">Loading...</div>
-
-    <div id="about-me-form" class="hidden">
-      <form action="/about" method="POST">
-        <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
+      <div id="about-me-form" class="hidden">
+        <form action="/about" method="POST">
+          <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
+          <br/>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+      
+      <form id="message-form" action="/messages" method="POST" class="hidden">
+        Enter a new message:
+        <br/>
+        <textarea name="text" id="message-input"></textarea>
         <br/>
         <input type="submit" value="Submit">
       </form>
+      <hr/>
+
+      <div id="message-container">Loading...</div>
     </div>
-    
-    <form id="message-form" action="/messages" method="POST" class="hidden">
-      Enter a new message:
-      <br/>
-      <textarea name="text" id="message-input"></textarea>
-      <br/>
-      <input type="submit" value="Submit">
-    </form>
-    <hr/>
-
-    <div id="message-container">Loading...</div>
-
   </body>
 </html>
