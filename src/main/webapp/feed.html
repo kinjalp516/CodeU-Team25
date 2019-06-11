@@ -4,23 +4,28 @@
 <title>Message Feed</title>
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/user-page.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
 <script src="/js/feed.js"></script>
-<body>
-	<nav>
-      <ul id="navigation">
-        <li><a href="/">Home</a></li>
-        <li><a href="/aboutus.html">About Our Team</a></li>
-        <li><a href="/feed.html">Message Feed</a></li>
+<script src="/js/navigation-loader.js"></script>
+</head>
+<body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
+  <div class="container-fluid">	
+  
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <ul class="navbar-nav" id="navigation">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+        <li class="nav-item active"><a class="nav-link" href="/feed.html">Message Feed</a></li>
+        <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
       </ul>
     </nav>
-</body>
 
-</head>
-<body onload="buildUI()">
- <div id="content">
-  <h1>Message Feed</h1>
-  <hr/>
-  <div id="message-container">Loading...</div>
- </div>
+    <div id="content">
+      <h1>Message Feed</h1>
+      <hr/>
+      <div id="message-container">Loading...</div>
+    </div>
+  </div>
 </body>
 </html>
