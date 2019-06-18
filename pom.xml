@@ -67,6 +67,12 @@ limitations under the License.
       <version>1.55.0</version>
     </dependency>
 
+	<dependency>
+  		<groupId>com.google.cloud</groupId>
+  		<artifactId>google-cloud-translate</artifactId>
+  		<version>1.55.0</version>
+	</dependency>
+
   </dependencies>
 
   <build>
@@ -75,11 +81,6 @@ limitations under the License.
         <groupId>com.google.appengine</groupId>
         <artifactId>appengine-maven-plugin</artifactId>
         <version>1.9.59</version>
-        <!-- <configuration>
-          <enableJarClasses>false</enableJarClasses>
-          <port>8181</port>
-          <address>0.0.0.0</address>
-        </configuration> -->
       </plugin>
     </plugins>
   </build>

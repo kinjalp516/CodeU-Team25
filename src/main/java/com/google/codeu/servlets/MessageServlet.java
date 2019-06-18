@@ -16,6 +16,8 @@
 
 package com.google.codeu.servlets;
 
+import org.jsoup.nodes.Document.OutputSettings;
+import java.util.StringTokenizer;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
@@ -98,37 +100,51 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
-
+    String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+   
     String replaced = "";
     
-    for (String word : text.split(" ")) {
-
-    	if (validURLCheck(word)) {
-    		String replacement;
-    		String regex;
-    		
-			//means is a video
-    		//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
-    		
-    		if (word.contains("https://www.youtube.com")) {
-    			//replacement = "<iframe src=\"$1\">";
-    			//regex = "(https?://youtube.com/watch?v=\\S+";
-    			String embed = word.substring(32, word.length());
-    			word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
-    		}
-    		
-    		//means is an image or another URL
-    		else {
-    	    	replacement = "<img src=\"$1\" />";
-    			regex = "(https?://\\S+\\.(png|jpg|gif))";
-    			word = word.replaceAll(regex, replacement);
-    		}
-    	}
-    	
-    	replaced = replaced + " " + word;
-    }
+    //will split the inserted message at all spaces and new lines
+    StringTokenizer st = new StringTokenizer(text, " \n", true);
     
+    while (st.hasMoreTokens()) {
+    	
+    	String word = st.nextToken();
+    	
+    	//checks if link is valid
+	    if (validURLCheck(word)) {
+	    	String replacement;
+	    	String regex;
+	    	
+	    	//link is a video
+	    	//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
+	    	if (word.contains("https://www.youtube.com")) {
+	    		//replacement = "<iframe src=\"$1\">";
+	    		//regex = "(https?://youtube.com/watch?v=\\S+)";
+	    		//word = word.replaceAll(regex, replacement);
+	    		
+	    		String embed = word.substring(32, word.length());
+	    		word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
+	    	}
+	          
+	    	//link is an image
+	    	else {
+	    		replacement = "<img src=\"$1\" />";
+	    		regex = "(https?://\\S+\\.(png|jpg|gif))";
+	    		word = word.replaceAll(regex, replacement);
+	    	}
+		}
+        
+	    //makes new line into HTML break statement to be read in as a new line
+	    if (word.equals("\n")) {
+	    	word = "<br>";
+	    }
+	    
+	    //concatenates words to make final string
+	    replaced = replaced + word;
+	}
+    
+
 	message = new Message(user, replaced);
     
     datastore.storeMessage(message);
