@@ -16,6 +16,8 @@
 
 package com.google.codeu.servlets;
 
+import org.jsoup.nodes.Document.OutputSettings;
+import java.util.StringTokenizer;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.codeu.data.Datastore;
@@ -69,8 +71,14 @@ public class MessageServlet extends HttpServlet {
     response.getWriter().println(json);
   }
 
-  public boolean validURLCheck (String messageURL) {
-	  /* Try creating a valid URL */
+  public boolean validImageVideoCheck (String messageURL) {
+	  
+	//checks if link is a video or image
+	  if (!(messageURL.contains("https://www.youtube.com") || messageURL.contains(".png") || messageURL.contains(".jpg") || messageURL.contains(".gif"))) {
+		  	return false;
+	  }
+	  
+	  //checks connectivity of link
 	  try {
 		    URL url = new URL(messageURL);
 		    URLConnection conn = url.openConnection();
@@ -83,6 +91,23 @@ public class MessageServlet extends HttpServlet {
 		    // the connection couldn't be established
 			return false;
 		}
+  }
+  
+  public String styledTextCheck (String word) {
+	  
+	  int wordLength = word.length();
+	  	   
+	  //used to make **word** italicized when message is posted
+	  if (wordLength >= 5 && word.substring(0,2).equals("**") && (word.substring(wordLength - 2,wordLength).equals("**"))) {
+		  word = "<i>" + word.substring(2, wordLength - 2) + "</i>";
+	  }
+	    
+	  //used to make *word* bold when message is posted
+	  else if (wordLength >= 3 && word.charAt(0) == '*' && word.charAt(wordLength - 1) == '*') {
+	    word = "<b>" + word.substring(1, wordLength - 1) + "</b>";
+	  }
+	  
+	  return word;
   }
   
   /** Stores a new {@link Message}. */
@@ -98,41 +123,55 @@ public class MessageServlet extends HttpServlet {
     }
 
     String user = userService.getCurrentUser().getEmail();
-    String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
-
+    String text = Jsoup.clean(request.getParameter("text"), "", Whitelist.none(), new OutputSettings().prettyPrint(false));
+   
     String replaced = "";
     
-    for (String word : text.split(" ")) {
-
-    	if (validURLCheck(word)) {
-    		String replacement;
-    		String regex;
-    		
-			//means is a video
-    		//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
-    		
-    		if (word.contains("https://www.youtube.com")) {
-    			//replacement = "<iframe src=\"$1\">";
-    			//regex = "(https?://youtube.com/watch?v=\\S+";
-    			String embed = word.substring(32, word.length());
-    			word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
-    		}
-    		
-    		//means is an image or another URL
-    		else {
-    	    	replacement = "<img src=\"$1\" />";
-    			regex = "(https?://\\S+\\.(png|jpg|gif))";
-    			word = word.replaceAll(regex, replacement);
-    		}
-    	}
-    	
-    	replaced = replaced + " " + word;
+    
+ 	//checks for bold/italic inputs for non-image/video inputs
+    if (!validImageVideoCheck(text)) {
+    	text =  styledTextCheck (text);
     }
+ 	  
+    //will split the inserted message at all spaces, new lines, and *
+    StringTokenizer st = new StringTokenizer(text, " \n*", true);
     
-	message = new Message(user, replaced);
+    while (st.hasMoreTokens()) {
+    	
+    	String word = st.nextToken();
     
-    datastore.storeMessage(message);
+    	//checks if link is valid
+	    if (validImageVideoCheck(word)) {
+	    	
+	    	//link is a video
+	    	//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
+	    	if (word.contains("https://www.youtube.com")) {
+	    		String embed = word.substring(32, word.length());
+	    		word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
+	    	}
+	          
+	    	//link is an image
+	    	else if (word.contains(".png") || word.contains(".jpg") || word.contains(".gif")){
+	    		String replacement = "<img src=\"$1\" />";
+	    		String regex = "(https?://\\S+\\.(png|jpg|gif))";
+	    		word = word.replaceAll(regex, replacement);
+	    	}
+	    	
+		}
+	   
+	  //preserves new line from original message
+	  if (word.equals("\n")) {
+	    word = "<br>";
+	  }
+	  
+	  //concatenates words to make final string
+	  replaced = replaced + word;
+	}
+    
 
+	message = new Message(user, replaced);
+    datastore.storeMessage(message);
     response.sendRedirect("/user-page.html?user=" + user);
+    
   }
 }
