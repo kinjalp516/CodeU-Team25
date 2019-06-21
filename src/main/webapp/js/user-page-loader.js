@@ -25,8 +25,19 @@ if (!parameterUsername) {
 
 /** Sets the page title based on the URL parameter username. */
 function setPageTitle() {
-  document.getElementById('page-title').innerText = parameterUsername;
-  document.title = parameterUsername + ' - User Page';
+  const url = '/nickname?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((nickname) => {
+    if(nickname == ''){
+      document.getElementById('page-title').innerText = parameterUsername;
+      document.title = parameterUsername + ' - User Page';
+    }
+    else {
+      document.getElementById('page-title').innerText = nickname;
+      document.title = nickname + ' - User Page';
+    }
+  });
 }
 
 /**
@@ -113,3 +124,12 @@ function fetchAboutMe(){
 
   });
 }
+
+/* Functions for the change nickname hidden form */
+  function openForm() {
+    document.getElementById("nickname-change").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("nickname-change").style.display = "none";
+  }
