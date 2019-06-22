@@ -31,10 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import org.commonmark.node.*;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
@@ -73,8 +75,8 @@ public class MessageServlet extends HttpServlet {
 
   public boolean validImageVideoCheck (String messageURL) {
 	  
-	//checks if link is a video or image
-	  if (!(messageURL.contains("https://www.youtube.com") || messageURL.contains(".png") || messageURL.contains(".jpg") || messageURL.contains(".gif"))) {
+	  //checks if link is video/image
+	  if (!(messageURL.contains("https://www.youtube.com/") || messageURL.contains("https://youtu.be/") || messageURL.contains(".png") || messageURL.contains(".jpg") || messageURL.contains(".gif"))) {
 		  	return false;
 	  }
 	  
@@ -93,21 +95,20 @@ public class MessageServlet extends HttpServlet {
 		}
   }
   
-  public String styledTextCheck (String word) {
+  public String styledTextCheck (String line) {
 	  
-	  int wordLength = word.length();
-	  	   
-	  //used to make **word** italicized when message is posted
-	  if (wordLength >= 5 && word.substring(0,2).equals("**") && (word.substring(wordLength - 2,wordLength).equals("**"))) {
-		  word = "<i>" + word.substring(2, wordLength - 2) + "</i>";
-	  }
-	    
-	  //used to make *word* bold when message is posted
-	  else if (wordLength >= 3 && word.charAt(0) == '*' && word.charAt(wordLength - 1) == '*') {
-	    word = "<b>" + word.substring(1, wordLength - 1) + "</b>";
-	  }
+	  //builds AST
+	  Parser parser = Parser.builder().build();
 	  
-	  return word;
+	  //creates string HTML syntax
+	  Node document = parser.parse(line);
+	  HtmlRenderer renderer = HtmlRenderer.builder().build();
+	  
+	  //trim spaces + enclosing <p> tag
+	  String word = renderer.render(document).trim();
+	  word = word.substring(3, word.length() - 4);
+	  
+	  return word;  
   }
   
   /** Stores a new {@link Message}. */
@@ -128,49 +129,43 @@ public class MessageServlet extends HttpServlet {
     String replaced = "";
     
     
- 	//checks for bold/italic inputs for non-image/video inputs
-    if (!validImageVideoCheck(text)) {
-    	text =  styledTextCheck (text);
-    }
- 	  
-    //will split the inserted message at all spaces, new lines, and *
-    StringTokenizer st = new StringTokenizer(text, " \n*", true);
+ 	//checked for styled text
+    text = styledTextCheck (text);
+    
+    StringTokenizer st = new StringTokenizer(text, " \n", true);
     
     while (st.hasMoreTokens()) {
     	
     	String word = st.nextToken();
-    
-    	//checks if link is valid
-	    if (validImageVideoCheck(word)) {
+    	
+    	//checks to see if token is valid + video/image
+    	if (!validImageVideoCheck(word)) {
+    		//continue
+    	} else if (word.contains("https://www.youtube.com/") || word.contains("https://youtu.be/")) {
+    	    //link is video, only works for youtube
+    		String embed = word.substring(word.length() - 11, word.length());
+    		word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
+    	} else if (word.contains(".png") || word.contains(".jpg") || word.contains(".gif")) {
+        	//link is image
+    		String replacement = "<img src=\"$1\" />";
+    		String regex = "(https?://\\S+\\.(png|jpg|gif))";
+    		word = word.replaceAll(regex, replacement);
+    	}
 	    	
-	    	//link is a video
-	    	//currently only works for youtube videos of with url https://www.youtube.com/watch?v=
-	    	if (word.contains("https://www.youtube.com")) {
-	    		String embed = word.substring(32, word.length());
-	    		word = "<iframe src= \"https://www.youtube.com/embed/" +  embed + "\"></iframe>";
-	    	}
-	          
-	    	//link is an image
-	    	else if (word.contains(".png") || word.contains(".jpg") || word.contains(".gif")){
-	    		String replacement = "<img src=\"$1\" />";
-	    		String regex = "(https?://\\S+\\.(png|jpg|gif))";
-	    		word = word.replaceAll(regex, replacement);
-	    	}
-	    	
-		}
-	   
-	  //preserves new line from original message
-	  if (word.equals("\n")) {
-	    word = "<br>";
-	  }
+    	//preserves new lines
+    	if (word.equals("\n")) {
+    		word = "<br>";
+    	}
 	  
-	  //concatenates words to make final string
-	  replaced = replaced + word;
+    	replaced = replaced + word;
 	}
     
-
-	message = new Message(user, replaced);
-    datastore.storeMessage(message);
+    //if message isn't empty, post
+    if (!replaced.equals("")) {
+    	message = new Message(user, replaced);
+    	datastore.storeMessage(message);
+    }
+    
     response.sendRedirect("/user-page.html?user=" + user);
     
   }
