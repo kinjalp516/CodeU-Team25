@@ -51,7 +51,7 @@
   display: block;
   margin-top: 15px;
   margin-bottom: 15px;
-  max-width: 40%;
+  max-width: 25%;
   border-radius: 15px;
   border-width: 1px;
   border-color: #ECEAEA;
@@ -61,6 +61,6 @@
 .message-body iframe {
 	margin-top: 15px;
   	margin-bottom: 15px;
-	width: 350px;
+  	width: 350px;
 	height: 200px;
 } 
