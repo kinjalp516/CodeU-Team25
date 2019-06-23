@@ -64,11 +64,16 @@ public class NicknameServlet extends HttpServlet {
 
     String userEmail = userService.getCurrentUser().getEmail();
     User user = datastore.getUser(userEmail);
-    user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));    
+    if (user == null) {
+      String nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
+      String aboutme = null; 
+      user = new User(userEmail, nickname, aboutme);
+    }
+    else {
+      user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));
+    }
 
-    //User user = new User(userEmail, nickname, aboutme);
     datastore.storeUser(user);
-
     response.sendRedirect("/user-page.html?user=" + userEmail);
   }
 }
