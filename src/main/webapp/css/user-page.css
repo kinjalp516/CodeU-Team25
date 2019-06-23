@@ -65,7 +65,11 @@
 	height: 200px;
 }
 
-/* CHANGE NICKNAME FORM CSS */
+#page-title {
+  padding-top: 25px;
+}
+
+/* HIDDEN FORMS CSS */
   * {box-sizing: border-box;}
 
   /* Button used to open the contact form */
@@ -127,4 +131,12 @@
   /* Add some hover effects to buttons */
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
+  }
+
+  #skillContainer {
+    display: inline-block;
+  }
+
+  #skill-level {
+    color: cadetblue;
   }

@@ -66,8 +66,9 @@ public class AboutMeServlet extends HttpServlet {
     User user = datastore.getUser(userEmail);
     if (user == null) {
       String nickname = null;
+      String skillLevel = null;
       String aboutme = Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed()); 
-      user = new User(userEmail, nickname, aboutme);
+      user = new User(userEmail, nickname, skillLevel, aboutme);
     }
     else {
       user.setAboutMe(Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed()));

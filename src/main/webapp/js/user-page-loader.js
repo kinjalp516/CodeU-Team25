@@ -107,9 +107,27 @@ function buildUI() {
   setPageTitle();
   showMessageFormIfViewingSelf();
   fetchMessages();
+  fetchSkillLevel();
   fetchAboutMe();
 }
 
+/** Fetches skill level specified by the user. */
+function fetchSkillLevel() {
+  const url = '/lvl?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((skillLevel) => {
+    const skillLevelContainer = document.getElementById('skill-level');
+    if(skillLevel == ''){
+      skillLevel = 'Beginner';
+    }
+    
+    skillLevelContainer.innerHTML = skillLevel;
+
+  });
+}
+
+/** Fetches about me information provided by the user. */
 function fetchAboutMe(){
   const url = '/about?user=' + parameterUsername;
   fetch(url).then((response) => {
@@ -125,7 +143,7 @@ function fetchAboutMe(){
   });
 }
 
-/* Functions for the change nickname hidden form */
+/** Functions for the change nickname hidden form. */
   function openForm() {
     document.getElementById("nickname-change").style.display = "block";
   }
@@ -133,3 +151,12 @@ function fetchAboutMe(){
   function closeForm() {
     document.getElementById("nickname-change").style.display = "none";
   }
+
+/** Functions for the change skill level hidden options. */
+  function showSkillOptions() {
+    document.getElementById("skill-lvl-change").style.display = "block";
+  }
+
+  // function hideSkillOptions() {
+  //   document.getElementById("skill-lvl-change").style.display = "none";
+  // }
