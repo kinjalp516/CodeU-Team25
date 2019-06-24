@@ -39,8 +39,38 @@ limitations under the License.
       </nav>
       
       <h1 id="page-title">User Page</h1>
+      <button class="open-button" onclick="openForm()">Change Nickname</button>      
+      <div class="form-popup" id="nickname-change">
+        <form action="/nickname" method="POST" class="form-container">        
+          <label for="nickname"><b>New Nickname</b></label>
+          <input type="text" placeholder="Enter nickname" name="nickname" required>        
+          <button type="submit" class="btn">Submit</button>
+          <button type="reset" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div>     
+      <hr>      
+         
+      <h3 id="skillContainer">Skill Level:
+        <span id="skill-level">User Skill Level</span>
+      </h3>
+      <div>
+        <button class="open-button" onclick="showSkillOptions()">Change Skill Level</button>
+        <div class="form-popup" id="skill-lvl-change">
+          <form action="/lvl" method="POST" class="form-container"> 
+            <label for="skillLevel">Select skill level:</label>
+            <select class="form-control" name="skillLevel">
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
+            </select>
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div> 
+      </div>   
+      <hr>
 
-      <div id="about-me-container">Loading...</div>
+      <h3>About Me:</h3>
+      <p id="about-me-container">Loading...</p>
 
       <div id="about-me-form" class="hidden">
         <form action="/about" method="POST">
@@ -49,6 +79,7 @@ limitations under the License.
           <input type="submit" value="Submit">
         </form>
       </div>
+      <hr>
       
       <form id="message-form" action="/messages" method="POST" class="hidden">
         Enter a new message:
