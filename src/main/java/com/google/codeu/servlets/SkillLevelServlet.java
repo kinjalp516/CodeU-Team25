@@ -66,9 +66,10 @@ public class SkillLevelServlet extends HttpServlet {
     User user = datastore.getUser(userEmail);
     if (user == null) {
       String nickname = null;
+      String activity = null;
       String skillLevel = request.getParameter("skillLevel");
       String aboutme = null; 
-      user = new User(userEmail, nickname, skillLevel, aboutme);
+      user = new User(userEmail, nickname, activity, skillLevel, aboutme);
     }
     else {
       user.setSkillLevel(request.getParameter("skillLevel"));

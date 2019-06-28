@@ -17,8 +17,8 @@ import org.jsoup.safety.Whitelist;
 /**
  * Handles fetching and saving user data.
  */
-@WebServlet("/nickname")
-public class NicknameServlet extends HttpServlet {
+@WebServlet("/act")
+public class ActivityServlet extends HttpServlet {
 
   private Datastore datastore;
 
@@ -45,11 +45,11 @@ public class NicknameServlet extends HttpServlet {
 
     User userData = datastore.getUser(user);
 
-    if(userData == null || userData.getNickname() == null) {
+    if(userData == null || userData.getActivity() == null) {
       return;
     }
 
-    response.getOutputStream().println(userData.getNickname());
+    response.getOutputStream().println(userData.getActivity());
   }
 
   @Override
@@ -65,14 +65,14 @@ public class NicknameServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     User user = datastore.getUser(userEmail);
     if (user == null) {
-      String nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
-      String activity = null;
+      String nickname = null;
+      String activity = request.getParameter("activity");
       String skillLevel = null;
       String aboutme = null; 
       user = new User(userEmail, nickname, activity, skillLevel, aboutme);
     }
     else {
-      user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));
+      user.setActivity(request.getParameter("activity"));
     }
 
     datastore.storeUser(user);

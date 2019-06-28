@@ -87,6 +87,7 @@ public class Datastore {
     Entity userEntity = new Entity("User", user.getEmail());
     userEntity.setProperty("email", user.getEmail());
     userEntity.setProperty("nickname", user.getNickname());
+    userEntity.setProperty("activity", user.getActivity());
     userEntity.setProperty("skillLevel", user.getSkillLevel());
     userEntity.setProperty("aboutMe", user.getAboutMe());
     datastore.put(userEntity);
@@ -107,9 +108,10 @@ public class Datastore {
     }
     
     String nickname = (String) userEntity.getProperty("nickname");
+    String activity = (String) userEntity.getProperty("activity");
     String skillLevel = (String) userEntity.getProperty("skillLevel");
     String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, nickname, skillLevel, aboutMe);
+    User user = new User(email, nickname, activity, skillLevel, aboutMe);
     
     return user;
   }
