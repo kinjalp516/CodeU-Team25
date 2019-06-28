@@ -63,31 +63,19 @@ public class ProfileServlet extends HttpServlet {
     User user = datastore.getUser(userEmail);
     if (user == null) {
       String nickname, activity, skillLevel, aboutme;
-      if (request.getParameter("nickname") == "" || request.getParameter("nickname") == null) nickname = null;
-      else nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
-
+      nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
       activity = request.getParameter("activity");
-
       skillLevel = request.getParameter("skillLevel");
-
-      if (request.getParameter("about-me") == "") aboutme = null;
-      else aboutme = Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed());
+      aboutme = Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed());
 
       user = new User(userEmail, nickname, activity, skillLevel, aboutme);
     }
     else { // If the user isnt null, I check what fields are not empty and change only those fields
-      if (request.getParameter("nickname") != "" || request.getParameter("nickname") != null) {
-        user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));
-      }
-
-      if (request.getParameter("activity") != "")
-        user.setActivity(request.getParameter("activity"));
-
-      if (request.getParameter("skillLevel") != "")
-        user.setSkillLevel(request.getParameter("skillLevel"));
-
-      if (request.getParameter("about-me") != "") 
-        user.setAboutMe(Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed()));
+ 
+      user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));  
+      user.setActivity(request.getParameter("activity"));
+      user.setSkillLevel(request.getParameter("skillLevel"));
+      user.setAboutMe(Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed()));
     }
 
     datastore.storeUser(user);

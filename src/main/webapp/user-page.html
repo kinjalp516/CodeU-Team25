@@ -54,20 +54,22 @@ limitations under the License.
         </h3>
         <hr>
       </div>
-
-      <h3>About Me:</h3>
-      <p id="about-me-container">Loading...</p>
+      <div id="aboutMeContainer">
+        <h3>About Me:</h3>
+        <p id="about-me-container">Loading...</p>
+      </div>
 
       <form action="/profile" method="POST" class="form-container" id="submit-all"> 
         <button type="submit" class="save-button">Save changes</button>
         <label for="nickname"><b>New Nickname</b></label>
         <br/>
-        <input type="text" placeholder="Enter nickname" name="nickname"/>        
+        <input type="text" placeholder="Enter nickname" id="nickname" name="nickname"/>        
         <hr>               
       
         <label for="activity">Select activity:</label>
-        <select size="3" class="form-control" name="activity">
-          <option value="Gym" selected>Gym</option>
+        <select size="1" class="form-control" id="act" name="activity">
+          <option id="currAct" value="Current Activity">Activity List --</option>
+          <option value="Gym">Gym</option>
           <option value="Running">Running</option>
           <option value="Yoga">Yoga</option>
           <option value="Basketball">Basketball</option>
@@ -82,8 +84,9 @@ limitations under the License.
         <br/>
         
         <label for="skillLevel">Select skill level:</label>
-        <select size="1" class="form-control" name="skillLevel">
-          <option value="Beginner" selected>Beginner</option>
+        <select size="1" class="form-control" id="skill-lvl" name="skillLevel">
+          <option id="currLvl" value="Current Skill Level">Skill Levels --</option>
+          <option value="Beginner">Beginner</option>
           <option value="Intermediate">Intermediate</option>
           <option value="Expert">Expert</option>
         </select>
@@ -91,7 +94,7 @@ limitations under the License.
 
         <label for="about-me">New about me:</label>
         <br/>
-        <textarea name="about-me" placeholder="about me" rows=4></textarea>
+        <textarea name="about-me" id="about-me" placeholder="about me" rows=4></textarea>
         <br/>
       </form>
       <hr>

@@ -17,6 +17,11 @@
 // Get ?user=XYZ parameter value
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
+// Variables to store current values
+var currentNickname;
+var currentActivity;
+var currentSkillLevel;
+var currentAboutMe;
 
 // URL must include ?user=XYZ parameter. If not, redirect to homepage.
 if (!parameterUsername) {
@@ -32,10 +37,12 @@ function setPageTitle() {
     if(nickname == ''){
       document.getElementById('page-title').innerText = parameterUsername;
       document.title = parameterUsername + ' - User Page';
+      currentNickname = parameterUsername;
     }
     else {
       document.getElementById('page-title').innerText = nickname;
       document.title = nickname + ' - User Page';
+      currentNickname = nickname;
     }
   });
 }
@@ -122,6 +129,7 @@ function fetchActivity() {
       activity = 'Gym';
     }
     
+    currentActivity = activity;
     activityContainer.innerHTML = activity;
 
   });
@@ -138,6 +146,7 @@ function fetchSkillLevel() {
       skillLevel = 'Beginner';
     }
     
+    currentSkillLevel = skillLevel;
     skillLevelContainer.innerHTML = skillLevel;
 
   });
@@ -152,6 +161,10 @@ function fetchAboutMe(){
     const aboutMeContainer = document.getElementById('about-me-container');
     if(aboutMe == ''){
       aboutMe = 'This user has not entered any information yet.';
+      currentAboutMe = 'This user has not entered any information yet.';
+    }
+    else {
+      currentAboutMe = aboutMe;
     }
     
     aboutMeContainer.innerHTML = aboutMe;
@@ -177,23 +190,16 @@ function showEditButton() {
 }
 
 function editProfile() {
+  // Show edit form
   document.getElementById("submit-all").style.display = "block";
+  // Hide edit profile button, activity container and skill container
   document.getElementById("edit-profile").style.display = "none";
   document.getElementById("activityContainer").style.display = "none";
   document.getElementById("skillContainer").style.display = "none";
+  document.getElementById("aboutMeContainer").style.display = "none";
+  // Fill form with existing values
+  document.getElementById("nickname").value = currentNickname;  
+  document.getElementById("about-me").value = currentAboutMe;
+  document.getElementById("currAct").value = currentActivity;
+  document.getElementById("currLvl").value = currentSkillLevel;  
 }
-
-function getPlaceholderAboutMe() {
-  const url = '/about?user=' + parameterUsername;
-  fetch(url).then((response) => {
-    return response.text();
-  }).then((aboutMe) => {
-    if(aboutMe == ''){
-      return 'about me';
-    }
-    else {
-      return aboutMe;
-    }
-  });
-}
-
