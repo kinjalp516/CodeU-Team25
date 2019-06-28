@@ -19,7 +19,6 @@
   max-width: 1000px;
 } */
 
-
 p { margin:0 }
 
 /* Remove bullet points from navigation bar. */
@@ -73,7 +72,7 @@ p.center {
 }
 
 .carousel {
-  width: 100%
+  width: 100%;
 }
 
 /* Since positioning the image, we need to help out the caption */
@@ -85,7 +84,7 @@ p.center {
 /* Declare heights because of positioning of img element */
 .carousel-item {
   height:auto/*50rem*/;
-  padding-top: 56.25%;
+  padding-top: 56.25%;  
 }
 .carousel-item > img {
   position: absolute;

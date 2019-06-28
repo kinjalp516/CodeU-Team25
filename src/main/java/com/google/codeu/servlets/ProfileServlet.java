@@ -17,8 +17,8 @@ import org.jsoup.safety.Whitelist;
 /**
  * Handles fetching and saving user data.
  */
-@WebServlet("/nickname")
-public class NicknameServlet extends HttpServlet {
+@WebServlet("/profile")
+public class ProfileServlet extends HttpServlet {
 
   private Datastore datastore;
 
@@ -27,9 +27,6 @@ public class NicknameServlet extends HttpServlet {
     datastore = new Datastore();
   }
 
-  /**
-   * Responds with the "about me" section for a particular user.
-   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
@@ -65,14 +62,20 @@ public class NicknameServlet extends HttpServlet {
     String userEmail = userService.getCurrentUser().getEmail();
     User user = datastore.getUser(userEmail);
     if (user == null) {
-      String nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
-      String activity = null;
-      String skillLevel = null;
-      String aboutme = null; 
+      String nickname, activity, skillLevel, aboutme;
+      nickname = Jsoup.clean(request.getParameter("nickname"), Whitelist.none());
+      activity = request.getParameter("activity");
+      skillLevel = request.getParameter("skillLevel");
+      aboutme = Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed());
+
       user = new User(userEmail, nickname, activity, skillLevel, aboutme);
     }
-    else {
-      user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));
+    else { // If the user isnt null, I check what fields are not empty and change only those fields
+ 
+      user.setNickname(Jsoup.clean(request.getParameter("nickname"), Whitelist.none()));  
+      user.setActivity(request.getParameter("activity"));
+      user.setSkillLevel(request.getParameter("skillLevel"));
+      user.setAboutMe(Jsoup.clean(request.getParameter("about-me"), Whitelist.relaxed()));
     }
 
     datastore.storeUser(user);
