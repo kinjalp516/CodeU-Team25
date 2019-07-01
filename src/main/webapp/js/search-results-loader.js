@@ -73,7 +73,7 @@ function sendInput() {
 //     return urlparameter;
 // }
 
-function buildUI() {
+function buildSearchPage() {
     fetchUsersFound();
 
 }

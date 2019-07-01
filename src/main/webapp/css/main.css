@@ -32,41 +32,27 @@ nav li {
 }
 
 /* Search bar styling. */
-  .searchbar{
-    margin-bottom: auto;
-    margin-top: auto;
-    height: 60px;
-    background-color: orangered;
-    border-radius: 30px;
-    padding: 10px;
-  }
+.navbar .search-container {
+  float: right;
+}
 
-  .search_input{
-    color: white;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 300px;
-    caret-color:#2b8057;
-    line-height: 40px;
-    padding: 0 10px;
-  }
+.navbar input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
 
-  ::placeholder{
-    color: rgb(255, 116, 65)
-  }
-
-  .search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color:green;
-    background: white;
-  }
+.navbar .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: transparent;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
 
 /* Polaroid div */
 .polaroid {
@@ -103,29 +89,6 @@ figcaption.caption {
 
 p.center {
 	text-align: center;
-}
-
-.carousel {
-  width: 100%;
-}
-
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  bottom: 3rem;
-  z-index: 10;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel-item {
-  height:auto/*50rem*/;
-  padding-top: 56.25%;  
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: auto;
 }
 
 .section1 {
