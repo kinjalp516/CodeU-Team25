@@ -44,9 +44,21 @@ function addLoginOrLogoutLinkToNavigation() {
               createListItem(createLink('/logout', 'Logout')));
         } else {
           navigationElement.appendChild(
-              createListItem(createLink('/login', 'Login')));
+              createButtonItem(createListItem(createLink('/login', 'Login'))));
         }
       });
+}
+
+/**
+ * Creates a button element.
+ * @param {Element} childElement
+ * @return {Element} button element
+ */
+function createButtonItem(childElement) {
+  const listButtonElement = document.createElement('button');
+  listButtonElement.appendChild(childElement);
+  listButtonElement.className = "navButton";
+  return listButtonElement;
 }
 
 /**
@@ -83,6 +95,6 @@ function createLink(url, text) {
   const linkElement = document.createElement('a');
   linkElement.appendChild(document.createTextNode(text));
   linkElement.href = url;
-  linkElement.className = "nav-link";
+  linkElement.className = "nav-link font";
   return linkElement;
 }
