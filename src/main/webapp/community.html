@@ -44,18 +44,27 @@
   </head>
 
   <body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
-    <div class="container-fluid">	
+    <div class="container-fluid pt-5">	
 
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <ul class="navbar-nav" id="navigation">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
-          <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
-          <li class="nav-item active"><a class="nav-link" href="/community.html">Community Page</a></li>
-        </ul>
-      </nav>
+      <nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color: #2b8057">
+          <span class="navbar-brand mb-0 h1">Fit Buddy</span>
+          <ul class="navbar-nav" id="navigation">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
+            <li class="nav-item active"><a class="nav-link" href="/community.html">Community Page</a></li>
+            <li class="nav-item"><a class="nav-link" href="/sentiment.html">Sentiment</a></li>          
+          </ul>
+  
+          <div class="searchbar mr-auto">
+            <form action="/search" method="POST" id="search-form">
+              <input class="search_input" type="text" name="search-input" placeholder="Search Buddies">
+              <button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+            </form>
+          </div>
+        </nav>
 
-      <div id="content">
+      <div class="pt-5" id="content">
         <h1>Community Page</h1>
         <p>Here is a list of every user who has posted a message:</p>
         <hr/>

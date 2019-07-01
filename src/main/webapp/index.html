@@ -23,8 +23,10 @@ limitations under the License.
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    
     <script src="/js/navigation-loader.js"></script>
+    <script src="/js/search-results-loader.js"></script>
   	<script>
     /** Creates a map that shows landmarks around Google. */
     function createMap(){
@@ -65,9 +67,10 @@ limitations under the License.
   	</style>
 </head>
   <body onload="addLoginOrLogoutLinkToNavigation(); createMap();">
-    <div class="container-fluid">	
+    <div class="container-fluid pt-5">	
     
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+      <nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color: #2b8057">
+        <span class="navbar-brand mb-0 h1">Fit Buddy</span>
         <ul class="navbar-nav" id="navigation">
           <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
@@ -75,6 +78,13 @@ limitations under the License.
           <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
           <li class="nav-item"><a class="nav-link" href="/sentiment.html">Sentiment</a></li>          
         </ul>
+
+        <div class="searchbar mr-auto">
+          <form action="javascript:;" onsubmit="sendInput()" id="search-form">
+            <input class="search_input" type="text" id="search-input" placeholder="Search Buddies">
+            <button type="submit" class="search_icon"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
       </nav>
 
     <div id="myCarousel" class="carousel slide mx-auto" data-ride="carousel">
@@ -88,7 +98,7 @@ limitations under the License.
           <img class="d-block w-100" src="https://www.stay-trained.com/wp-content/uploads/2018/04/Supplement-Fitness.jpg">
           <div class="container">
             <div class="carousel-caption d-block">
-              <h1 class="text-white bg-dark">Gym Buddy</h1>              
+              <h1 class="text-white" style="background-color: darkgreen">Fit Buddy</h1>              
             </div>
           </div>
         </div>
@@ -96,7 +106,7 @@ limitations under the License.
           <img class="d-block w-100" src="https://www.thenational.ae/image/policy:1.719801:1523202284/lf09-APR-fitness.jpg?f=16x9&w=1200&$p$f$w=5dce02a">
           <div class="container">
             <div class="carousel-caption d-block">
-              <h1 class="text-white bg-dark">Gym Buddy</h1>  
+              <h1 class="text-white" style="background-color: darkgreen">Fit Buddy</h1>  
             </div>
           </div>
         </div>
@@ -104,7 +114,7 @@ limitations under the License.
           <img class="d-block w-100" src="https://cdn1.medicalnewstoday.com/content/images/articles/320/320590/woman-looking-at-phone-in-gym.jpg">
           <div class="container">
             <div class="carousel-caption d-block">
-              <h1 class="text-white bg-dark">Gym Buddy</h1>  
+              <h1 class="text-white" style="background-color: darkgreen">Fit Buddy</h1>  
             </div>
           </div>
         </div>

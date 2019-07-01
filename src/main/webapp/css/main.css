@@ -30,9 +30,45 @@ nav ul {
 /* Keep navigation menu on one line. */
 nav li {
   display: inline-block;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
+/* Search bar styling. */
+  .searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: orangered;
+    border-radius: 30px;
+    padding: 10px;
+  }
+
+  .search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 300px;
+    caret-color:#2b8057;
+    line-height: 40px;
+    padding: 0 10px;
+  }
+
+  ::placeholder{
+    color: rgb(255, 116, 65)
+  }
+
+  .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:green;
+    background: white;
+  }
 
 /* Polaroid div */
 .polaroid {

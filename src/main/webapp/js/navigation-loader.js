@@ -31,8 +31,14 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(createListItem(createLink(
+          if (window.location.pathname == '/user-page.html?user=' + loginStatus.username) {
+              navigationElement.appendChild(createActiveListItem(createLink(
+                '/user-page.html?user=' + loginStatus.username, 'Your Page')));
+          }
+          else {
+            navigationElement.appendChild(createListItem(createLink(
               '/user-page.html?user=' + loginStatus.username, 'Your Page')));
+          }          
 
           navigationElement.appendChild(
               createListItem(createLink('/logout', 'Logout')));
@@ -52,6 +58,18 @@ function createListItem(childElement) {
   const listItemElement = document.createElement('li');
   listItemElement.appendChild(childElement);
   listItemElement.className = "nav-item";
+  return listItemElement;
+}
+
+/**
+ * Creates an active nav element.
+ * @param {Element} childElement
+ * @return {Element} li element
+ */
+function createActiveListItem(childElement) {
+  const listItemElement = document.createElement('li');
+  listItemElement.appendChild(childElement);
+  listItemElement.className = "nav-item active";
   return listItemElement;
 }
 

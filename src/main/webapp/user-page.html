@@ -28,16 +28,23 @@ limitations under the License.
   </head>
 
   <body onload="buildUI(); showEditButton(); addLoginOrLogoutLinkToNavigation();">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid pt-5">
+      <nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color: #2b8057">
+        <span class="navbar-brand mb-0 h1">Fit Buddy</span>
         <ul class="navbar-nav" id="navigation">
           <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
           <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
           <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
+          <li class="nav-item"><a class="nav-link" href="/sentiment.html">Sentiment</a></li>          
         </ul>
+
+        <div class="searchbar mr-auto">
+          <input class="search_input" type="text" name="" placeholder="Search Buddies">
+          <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+        </div>
       </nav>
-      
+      <div class="pt-3"></div>
       <h1 id="page-title">User Page</h1>
 
       <button id="edit-profile" class="edit-button" onclick="editProfile()">Edit profile</button>      
