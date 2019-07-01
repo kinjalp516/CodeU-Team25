@@ -12,20 +12,29 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script src="/js/navigation-loader.js"></script>
+    <script src="/js/search-results-loader.js"></script>
 </head>
 <body onload="addLoginOrLogoutLinkToNavigation();">
-  <div class="container-fluid">	
+  <div class="container-fluid pt-5">	
   
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #FFA07A">
       <ul class="navbar-nav" id="navigation">
         <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/aboutus.html">About Our Team</a></li>
-        <li class="nav-item"><a class="nav-link" href="/feed.html">Message Feed</a></li>
-        <li class="nav-item"><a class="nav-link" href="/community.html">Community Page</a></li>
-        <li class="nav-item active"><a class="nav-link" href="/sentiment.html">Sentiment</a></li>
+        <li class="nav-item"><a class="nav-link font" href="/aboutus.html">About Our Team</a></li>
+        <li class="nav-item"><a class="nav-link font" href="/feed.html">Message Feed</a></li>
+        <li class="nav-item"><a class="nav-link font" href="/community.html">Community Page</a></li>
+        <!-- <li class="nav-item active"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
+        <div class="divider"/>  
       </ul>
-    </nav>
 
+      <div class="search-container">
+        <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
+          <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input">
+          <button class="my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </nav>
+    <div class="pt-5"></div>
     
     <h1>Sentiment Analysis</h1>
     <p>Type a message and click submit to analyze its sentiment:</p>    

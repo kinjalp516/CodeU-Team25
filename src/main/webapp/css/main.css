@@ -31,6 +31,28 @@ nav li {
   display: inline-block;
 }
 
+/* Search bar styling. */
+.navbar .search-container {
+  float: right;
+}
+
+.navbar input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.navbar .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: transparent;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
 
 /* Polaroid div */
 .polaroid {
@@ -67,29 +89,6 @@ figcaption.caption {
 
 p.center {
 	text-align: center;
-}
-
-.carousel {
-  width: 100%;
-}
-
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  bottom: 3rem;
-  z-index: 10;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel-item {
-  height:auto/*50rem*/;
-  padding-top: 56.25%;  
-}
-.carousel-item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: auto;
 }
 
 .section1 {

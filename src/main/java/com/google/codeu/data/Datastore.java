@@ -19,6 +19,7 @@ package com.google.codeu.data;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
@@ -152,4 +153,36 @@ public class Datastore {
 	  }
 	  return users;
 	}
+
+  /*
+    Function that returns a list of users that match the input by email, nickname or activity
+  */
+  public List<String> searchUsers(String searchInput) {
+    List<String> users = new ArrayList<>();
+    Query queryByEmail = new Query("User")
+      .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, searchInput));
+    PreparedQuery result = datastore.prepare(queryByEmail);
+    Entity userEntity = result.asSingleEntity();
+    if(userEntity == null) {
+      Query queryByNickname = new Query("User")
+      .setFilter(new Query.FilterPredicate("nickname", FilterOperator.EQUAL, searchInput));
+      result = datastore.prepare(queryByNickname);
+      userEntity = result.asSingleEntity();
+      if (userEntity == null) {
+        Query queryByActivity = new Query("User")
+          .setFilter(new Query.FilterPredicate("activity", FilterOperator.EQUAL, searchInput));
+        List<Entity> results = datastore.prepare(queryByActivity).asList(FetchOptions.Builder.withDefaults());
+        for (Entity userFound : results) {
+          String email = (String) userFound.getProperty("email");    
+          users.add(email);
+        }
+        return users;
+      }
+    }
+    
+    String email = (String) userEntity.getProperty("email");
+    users.add(email);
+    return users;
+    
+  }
 }

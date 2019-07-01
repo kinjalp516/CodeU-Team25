@@ -21,6 +21,7 @@ public class User {
   }
 
   public String getNickname() {
+    if (nickname == null) return email;
     return nickname;
   }
 
