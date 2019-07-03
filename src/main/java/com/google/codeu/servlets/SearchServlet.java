@@ -3,6 +3,7 @@ package com.google.codeu.servlets;
 import java.io.Console;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -30,12 +31,9 @@ public class SearchServlet extends HttpServlet {
   }
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
-    // Map<String, String> inputs = new HashMap<String, String>();    
-    // URL url = new URL(request.getRequestURL().toString());
-    // inputs = getQueryMap(url.getQuery());
+
     List<String> users = datastore.searchUsers(request.getParameter("search"));
     Gson gson = new Gson();
     String json = gson.toJson(users);
