@@ -15,9 +15,10 @@ limitations under the License.
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Fitbuddy</title>
+    <title>fitbuddy</title>
     
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:700|Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -27,72 +28,93 @@ limitations under the License.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/feed.js"></script>
+    <script src="/js/index.js"></script>
     <script src="/js/search-results-loader.js"></script>
     
     <link rel="icon" href="armIcon.png">
 </head>
 
-  <body class = "home" onload="addLoginOrLogoutLinkToNavigation();">
-    <div class="container-fluid">	
-    
-     <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #FFA07A">
+  <body class="landing">
+  	
+	<!-- NEED TO ADD THIS BACK onload="addLoginOrLogoutLinkToNavigation();" -->
+	
+     <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between">
         <ul class="navbar-nav" id="navigation">
-          <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-          <li class="nav-item"><a class="nav-link font" href="/aboutus.html">About Our Team</a></li>
-          <!-- <li class="nav-item"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
-          <div class="divider"/>  
+          <button class="navButton"><li active"><a class="nav-link font" href="/">Sign Up</a></li></button>
+          <div class=divider></div>
+          <button class="navButton"><li active"><a class="nav-link font" href="/login">Log In</a></li></button>
         </ul>
-
+        
+        <!--
         <div class="search-container">
           <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
             <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input">
             <button class="my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
           </form>
-        </div>
-      </nav>
+        </div> -->	
+      </nav> 
 	
-	<div class="section1">
-		<span class="helper"></span><img src="fitbuddyWhite.png" class="fitBuddyLogo">
-	</div>
-	
-	<div class="section2">
-		<div class="bottomright1"><p class="section2Text"><strong>Working out alone</strong></p>></div>
-		<div class="bottomright2"><p class="section2Test2"><strong>is intimidating</strong></p></div>
-	</div>
-	
-	<!--Need to figure out a way to make scroll continuous - temporary -->
-	<div class="section3">
-		<marquee scrollamount="2" direction = "right">weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert</marquee>
-		<marquee scrollamount="2" direction = "left">weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert</marquee>
+	<div class="section1234">
+		<div class="section1">
+			<p class="section1subtitle"> fitbuddy is for the </p>
 		
-		<p class="section3Text"><strong>Find a buddy</strong></p>
-		<p class="section3Test2"><strong>to match<br>your interests<p></p></strong></p>
+		  	<h1>
+		  		<a class="typewrite" data-period="2000" data-type='["\"I need to be motivated to exercise\"","\"I do not like to exercise alone\"","\"I get bored during my workout\"","\"I am too scared to try exercising myself\""]'>
+		    		<span class="wrap"></span>
+		    	</a>
+		    </h1>
+		    
+		    <div class="legUp">
+				<img src="https://www.clker.com/cliparts/7/c/3/c/12344051351613149633mpuech_Anantasana.svg.hi.png" alt="yoga">
+			</div>
+		</div>
 		
-		<marquee scrollamount="2" direction = "right">weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert</marquee>
-		<marquee scrollamount="2" direction = "left">weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert</marquee>
-		<marquee scrollamount="2" direction = "right">weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert weightlifting running intermediate location time skill workout football preference cardio gym beginner basketball friend expert</marquee>
+		<div class="section2">
+			<img class="texts" src="textMessages.png" alt="texts">
+			<div class="css-typing">
+	  			<p class="textResponse anim-typewriter">Let's try a class!</p>
+	  		</div>
+	  		<div class="section2Text">
+	  			<p class="section2TextMain">Connect<br>with<br>friends</p>
+	  			<p class="section2TextSub">based on shared interests</p>
+	  		</div>
+	  		<div class="split">
+				<img src="http://www.clker.com/cliparts/d/f/3/7/1234405121306347907mpuech_Hanumanasana.svg.hi.png" alt="yoga">
+			</div>
+		</div>
 		
+		<div class="section3">
+		
+			<img class="stretch" src="http://www.clker.com/cliparts/3/a/c/8/12344051431200553172mpuech_Vakrasana.svg.hi.png" alt="stretch">
+			<img class="calendar" src="calendar.png" alt="calendar">
+		
+			<div class="section3Text">
+		  		<p class="section2TextMain">Meet your<br>goals</p>
+		  		<p class="section3TextSub">by holding eachother<br>accountable</p>
+			</div>
+		  		
+		</div>
+			
+			
+		<div class="section4">
+			
+			<p class = "section2TextMain">Team Roles</p>
+			<div class="row">
+	  			<div class="column">
+	    				<h2 class="name">Nittu</h2>
+	    				<p class="task">Maps<br>Translation</p>
+	  			</div>
+	  			<div class="column">
+	    				<h2 class="name">Humberto</h2>
+	    				<p class="task">Backend<br>User page<br>Search</p>
+	  			</div>
+	  			<div class="column">
+	    				<h2 class="name">Kinjal</h2>
+	    				<p class="task">Frontend UX/UI<br>Messaging</p>
+	  			</div>
+	  	</div>
 	</div>
-	
-	<div class="section4">
-		<p></p>
-		<p class = "section3Test2"><b>Team Roles</b></p>
-		<div class="row">
-  			<div class="column">
-    				<h2><b>Nittu</b></h2>
-    				<p>Maps<br>Translation</p>
-  			</div>
-  			<div class="column">
-    				<h2><b>Humberto</b></h2>
-    				<p>Backend<br>User page<br>Search</p>
-  			</div>
-  			<div class="column">
-    				<h2><b>Kinjal</b></h2>
-    				<p>Frontend<br>Messaging</p>
-  			</div>
-  		</div>
   
-	</div>
   
   </body>
 </html>

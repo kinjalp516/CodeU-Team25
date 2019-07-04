@@ -1,0 +1,149 @@
+/* CSS style-sheet for landing page */
+
+
+.landing {
+	background-color: #89cca6;
+}
+
+.section1234 {
+	position: relative;
+}
+
+.section1 {
+	background-color: #89cca6;
+	padding-top: 140px;
+	padding-left: 200px;
+	padding-right: 260px;
+	padding-bottom: 140px;
+	height: 520px;
+}
+
+.section1subtitle {
+	font-size: 40px;
+	color: #9debbf;
+	font-weight: 600;
+}
+
+.typewrite {
+	font-size: 90px;
+	color: white !important;
+	font-weight: 700;
+}
+
+.section2 {
+	height: 800px;
+	background-color: #2e70d9;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.legUp {
+	position: absolute;
+	top: 230px;
+	right: 20px;
+}
+
+.split {
+	position: absolute;
+	top: 920px;
+	left: -200px;
+}
+
+.texts {
+	margin-left:-20px;
+	width:65%;
+}
+
+.section2Text {
+	position: absolute;
+	top: 700px;
+	right: 100px;
+}
+
+.section2TextMain {
+	font-size: 110px;
+	color: white;
+	font-weight: bold;
+	line-height: 95px;
+}
+
+.section2TextSub {
+	font-size: 40px;
+	color: #619eff;
+	font-weight: 600;
+}
+
+.textResponse{
+    position: absolute;
+    top: 1125px;
+    left: 220px;
+    width: 24em;
+    margin: 0 auto;
+    color: black;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 2.5vw;
+    font-family: Arial Rounded MT Bold,Helvetica Rounded,Arial,sans-serif; 
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+}
+
+/* Animation */
+.anim-typewriter{
+  animation: typewriter 3s steps(17) 1s 1 normal both,
+             blinkTextCursor 1s steps(60) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 8em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(105,105,105,.75);}
+  to{border-right-color: transparent;}
+}
+
+.section3 {
+	height: 800px;
+	background-color: #bf3278;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	padding-right: 60px;
+}
+
+.calendar {
+	width: 50%;
+	float: right;
+}
+
+.section3Text {
+	margin-top: 150px;
+	margin-left: 50px;
+}
+
+.section3TextSub {
+	font-size: 40px;
+	color: #fc58aa;
+	font-weight: 600;
+}
+
+.stretch {
+	position: absolute;
+	margin-top: 460px;
+	margin-left: -30px;
+	-webkit-transform: scaleX(-1);
+ 	transform: scaleX(-1);
+}
+
+.name {
+	font-weight: 600;
+	font-size: 40px;
+}
+
+.task {
+	font-size: 20px;
+	line-height: 20x;
+}
+
+.section4 {
+	padding: 50px;
+}
