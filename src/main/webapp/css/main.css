@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-.home {
-  background-color: #FFA07A !important;
-  overflow-x: hidden;
+body {
+	margin: 0 !important;
+	overflow-x: hidden;
 }
 
 p { margin:0 }
@@ -80,63 +80,6 @@ img.photoKinjal {
    background-color: #E3E3E3;
 }
 
-/* Caption formatting */
-figcaption.caption {
-	font-family: 'Just Me Again Down Here', cursive;
-    font-size: 27px;
-    text-align: center;
-}
-
-p.center {
-	text-align: center;
-}
-
-.section1 {
-	background-color: #FFA07A;
-	padding: 50px;
-	height: 500px;
-	position:absolute;
-	text-align: center;
-	left:0;
-	right:0;
-}
-
-.section2 {
-	background-image: url(http://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	position: absolute;
-	left:0;
-	right:0;
-	margin-top: 500px;
-	height: 100%;
-}
-
-.section3 {
-	background-color: #f2aa3d;
-	position: absolute;
-	left:0;
-	right:0;
-	margin-top: 1250px;
-	height: 100%;
-	text-align: center;
-}
-
-.section4 {
-	background-color: #2b8057;
-	position: absolute;
-	left:0;
-	right:0;
-	margin-top: 2010px;
-	text-align: center;
-	color: white;
-}
-
-.fitBuddyLogo {
-	vertical-align: center;
-	width: 50%;
-}
-
 .helper {
     display: inline-block;
     height: 100%;
@@ -148,11 +91,7 @@ p.center {
 	border-width: 2px;
 	border-color: #FFF;
 	background-color: transparent;
-}
-
-.font {
-	color: white;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .divider{
@@ -161,61 +100,14 @@ p.center {
     display:inline-block;
 }
 
-
-marquee {
-	font-family: 'Roboto', sans-serif;
-	font-size: 120px;
-	color: #d99938;
-	line-height: 100px;
-}
-
-.section2Text {
-	color: white;
-	font-size: 30px;
-	line-height: 40px;
-	bottom: 60px;
-}
-
-.section2Test2 {
-	color: white;
-	font-size: 100px;
-	line-height: 90px;
-}
-
-
-.section3Text {
-	color: white;
-	font-size: 30px;
-	line-height: 40px;
-}
-
-.section3Test2 {
-	color: white;
-	font-size: 100px;
-	line-height: 90px;
-}
-
-.bottomright1 {
-  float: right;
-  position: absolute;
-  bottom: 110px;
-  right: 16px;
-}
-
-.bottomright2 {
-  float: right;
-  position: absolute;
-  bottom: 35px;
-  right: 16px;
-}
-
 /* Create three equal columns that floats next to each other */
 .column {
-  float: left;
   width: 33.33%;
   padding: 10px;
   margin-top: 15px;
   margin-bottom: 15px;
+  text-align: center;
+  color: white;
 }
 
 /* Clear floats after the columns */
