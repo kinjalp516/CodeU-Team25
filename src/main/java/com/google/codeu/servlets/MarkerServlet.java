@@ -5,6 +5,8 @@ import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import com.google.codeu.data.Marker;
 import java.io.IOException;
@@ -34,7 +36,7 @@ public class MarkerServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
 
-    List<Marker> markers = getMarkers();
+    List<Marker> markers = datastore.getMarkers();
     Gson gson = new Gson();
     String json = gson.toJson(markers);
 
@@ -43,54 +45,29 @@ public class MarkerServlet extends HttpServlet {
 
   /** Accepts a POST request containing a new marker. */
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) {
-	String user = request.getParameter("user");
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     double lat = Double.parseDouble(request.getParameter("lat"));
     double lng = Double.parseDouble(request.getParameter("lng"));
     String content = Jsoup.clean(request.getParameter("content"), Whitelist.none());
-
-    User userData = datastore.getUser(user);
-    String userName;
     
-    	userName = userData.getNickname();
-      
+    UserService userService = UserServiceFactory.getUserService();
+    if (!userService.isUserLoggedIn()) {
+      response.sendRedirect("/index.html");
+      return;
+    }
+    
+    String user = userService.getCurrentUser().getEmail(); //request.getParameter("user"); 
+    User userData = datastore.getUser(user);
+    String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
     String skillLevel = userData.getSkillLevel();
     
     Marker marker = new Marker(lat, lng, content, userName, skillLevel);
-    storeMarker(marker);
+    datastore.storeMarker(marker);
   }
-
-  /** Fetches markers from Datastore. */
-  private List<Marker> getMarkers() {
-    List<Marker> markers = new ArrayList<>();
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Marker");
-    PreparedQuery results = datastore.prepare(query);
-
-    for (Entity entity : results.asIterable()) {
-      double lat = (double) entity.getProperty("lat");
-      double lng = (double) entity.getProperty("lng");
-      String content = (String) entity.getProperty("content");
-      String userName = (String) entity.getProperty("userName");
-      String skillLevel = (String) entity.getProperty("skillLevel");
-
-      Marker marker = new Marker(lat, lng, content, userName, skillLevel);
-      markers.add(marker);
-    }
-    return markers;
-  }
-
-  /** Stores a marker in Datastore. */
-  public void storeMarker(Marker marker) {
-    Entity markerEntity = new Entity("Marker");
-    markerEntity.setProperty("lat", marker.getLat());
-    markerEntity.setProperty("lng", marker.getLng());
-    markerEntity.setProperty("content", marker.getContent());
-    markerEntity.setProperty("userName", marker.getUserName());
-    markerEntity.setProperty("skillLevel", marker.getSkillLevel());
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(markerEntity);
+  
+  /* Delete previously saved markers.*/
+  @Override
+  public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+    datastore.deleteMarkers();
   }
 }
