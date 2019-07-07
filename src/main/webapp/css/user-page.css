@@ -75,8 +75,8 @@
   /* Button used to open the contact form */
   .edit-button {
     display: none;
-    background-color: #FFA07A;
-    color: rgb(100, 55, 24);
+    background-color: #89cca6;
+    color: darkgreen;
     padding: 5px 10px;
     border: none;
     cursor: pointer;
@@ -87,8 +87,8 @@
   }
 
   .save-button {
-    background-color: #FFA07A;
-    color: rgb(100, 55, 24);
+    background-color: #89cca6;
+    color: darkgreen;
     padding: 5px 10px;
     border: none;
     cursor: pointer;
@@ -103,7 +103,7 @@
     display: none;
     max-width: 500px;
     padding: 10px;
-    background-color: rgb(247, 219, 208);
+    background-color: #b4dbc5;
   }
 
   /* Full-width input fields */
