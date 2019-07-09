@@ -31,6 +31,11 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
+          navigationElement.appendChild(
+            createListItem(createLink('/feed.html', 'Message Feed')));
+          navigationElement.appendChild(
+            createListItem(createLink('/community.html', 'Community Page')));
+            
           if (window.location.pathname == '/user-page.html?user=' + loginStatus.username) {
               navigationElement.appendChild(createActiveListItem(createLink(
                 '/user-page.html?user=' + loginStatus.username, 'Your Page')));

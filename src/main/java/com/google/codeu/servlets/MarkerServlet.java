@@ -34,14 +34,21 @@ public class MarkerServlet extends HttpServlet {
   /** Responds with a JSON array containing marker data. */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
+	    response.setContentType("application/json");
+	    
+	    String user = request.getParameter("user");
+	    
+	    List<Marker> markers = new ArrayList<>();
 
-    List<Marker> markers = datastore.getMarkers();
-    Gson gson = new Gson();
-    String json = gson.toJson(markers);
+	    markers = datastore.getUserMarkers(user);
+	    Marker m = new Marker(37.423829, -122.092154, user,"Google West Campus",
+	            "Google West Campus is home to YouTube and Maps.");
+	    markers.add(m);
+	    	Gson gson = new Gson();
+	    String json = gson.toJson(markers);
 
-    response.getOutputStream().println(json);
-  }
+	    response.getOutputStream().println(json);
+	  }
 
   /** Accepts a POST request containing a new marker. */
   @Override
@@ -58,10 +65,10 @@ public class MarkerServlet extends HttpServlet {
     
     String user = userService.getCurrentUser().getEmail(); //request.getParameter("user"); 
     User userData = datastore.getUser(user);
-    String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
+    //String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
     String skillLevel = userData.getSkillLevel();
     
-    Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+    Marker marker = new Marker(lat, lng, content, user, skillLevel);
     datastore.storeMarker(marker);
   }
   

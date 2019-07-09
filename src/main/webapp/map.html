@@ -59,7 +59,8 @@
     }
     /** Fetches markers from the backend and adds them to the map. */
     function fetchMarkers(){
-      fetch('/markers').then((response) => {
+    	  const url = '/markers?user=' + null;
+      fetch(url).then((response) => {
         return response.json();
       }).then((markers) => {
         markers.forEach((marker) => {
@@ -83,7 +84,7 @@
       });
     }
     /** Sends a marker to the backend for saving. */
-    function postMarker(lat, lng, content){
+    /*function postMarker(lat, lng, content){
       const params = new URLSearchParams();
       params.append('lat', lat);
       params.append('lng', lng);
@@ -92,9 +93,9 @@
         method: 'POST',
         body: params
       });
-    }
+    }*/
     /** Creates a marker that shows a textbox the user can edit. */
-    function createMarkerForEdit(lat, lng){
+    /*function createMarkerForEdit(lat, lng){
       // If we're already showing an editable marker, then remove it.
       if(editMarker){
        editMarker.setMap(null);
@@ -113,7 +114,7 @@
       infoWindow.open(map, editMarker);
     }
     /** Builds and returns HTML elements that show an editable textbox and a submit button. */
-    function buildInfoWindowInput(lat, lng){
+    /*function buildInfoWindowInput(lat, lng){
       const textBox = document.createElement('textarea');
       const button = document.createElement('button');
       button.appendChild(document.createTextNode('Submit'));
@@ -127,7 +128,7 @@
       containerDiv.appendChild(document.createElement('br'));
       containerDiv.appendChild(button);
       return containerDiv;
-    }
+    }*/
   </script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E&callback=createMap">
