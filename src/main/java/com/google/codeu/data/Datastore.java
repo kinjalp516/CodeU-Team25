@@ -256,6 +256,7 @@ public class Datastore {
     datastore.put(markerEntity);
   }
   
+  /** Deletes all Markers */
   public void deleteMarkers() {
 	  List<Marker> markers = new ArrayList<>();
 

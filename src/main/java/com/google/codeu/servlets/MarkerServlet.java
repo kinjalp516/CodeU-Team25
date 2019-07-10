@@ -41,10 +41,10 @@ public class MarkerServlet extends HttpServlet {
 	    List<Marker> markers = new ArrayList<>();
 
 	    markers = datastore.getUserMarkers(user);
-	    Marker m = new Marker(37.423829, -122.092154, user,"Google West Campus",
-	            "Google West Campus is home to YouTube and Maps.");
-	    markers.add(m);
-	    	Gson gson = new Gson();
+	    //Marker m = new Marker(37.423829, -122.092154, user,"Google West Campus",
+	    //        "Google West Campus is home to YouTube and Maps.");
+	    //markers.add(m);
+	    Gson gson = new Gson();
 	    String json = gson.toJson(markers);
 
 	    response.getOutputStream().println(json);
@@ -65,10 +65,10 @@ public class MarkerServlet extends HttpServlet {
     
     String user = userService.getCurrentUser().getEmail(); //request.getParameter("user"); 
     User userData = datastore.getUser(user);
-    //String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
+    String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
     String skillLevel = userData.getSkillLevel();
     
-    Marker marker = new Marker(lat, lng, content, user, skillLevel);
+    Marker marker = new Marker(lat, lng, content, userName, skillLevel);
     datastore.storeMarker(marker);
   }
   

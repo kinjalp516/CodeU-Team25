@@ -22,6 +22,7 @@ var currentNickname;
 var currentActivity;
 var currentSkillLevel;
 var currentAboutMe;
+let map;
 
 // URL must include ?user=XYZ parameter. If not, redirect to homepage.
 if (!parameterUsername) {
@@ -116,6 +117,7 @@ function buildUI() {
   fetchActivity();
   fetchSkillLevel();
   fetchAboutMe();
+  createMap();
 }
 
 /** Fetches activity specified by the user. */
@@ -202,4 +204,43 @@ function editProfile() {
   document.getElementById("about-me").value = currentAboutMe;
   document.getElementById("currAct").value = currentActivity;
   document.getElementById("currLvl").value = currentSkillLevel;  
+}
+
+function createMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 38.5949, lng: -94.8923},
+    zoom: 4
+  });
+  // When the user clicks in the map, show a marker with a text box the user can edit.
+  map.addListener('click', (event) => {
+    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+  });
+  fetchMarkers();
+}
+
+/** Fetches markers from the backend and adds them to the map. */
+function fetchMarkers(){
+  const url = '/markers?user=' + parameterUsername;
+fetch(url).then((response) => {
+  return response.json();
+}).then((markers) => {
+  markers.forEach((marker) => {
+   createMarkerForDisplay(marker.lat, marker.lng, marker.content)
+  });
+});
+}
+/** Creates a marker that shows a read-only info window when clicked. */
+function createMarkerForDisplay(lat, lng, content){
+  let url = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+const marker = new google.maps.Marker({
+  position: {lat: lat, lng: lng},
+  map: map,
+  icon: url
+});
+var infoWindow = new google.maps.InfoWindow({
+  content: content
+});
+marker.addListener('click', () => {
+  infoWindow.open(map, marker);
+});
 }
