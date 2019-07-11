@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -195,5 +196,76 @@ public class Datastore {
     users.add(email);
     return users;
     
+  }
+  
+  /** Fetches markers from Datastore. */
+  public List<Marker> getMarkers() {
+    List<Marker> markers = new ArrayList<>();
+
+    Query query = new Query("Marker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      double lat = (double) entity.getProperty("lat");
+      double lng = (double) entity.getProperty("lng");
+      String content = (String) entity.getProperty("content");
+      String userName = (String) entity.getProperty("userName");
+      String skillLevel = (String) entity.getProperty("skillLevel");
+
+      Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+      markers.add(marker);
+    }
+    return markers;
+  }
+  
+  /** Fetches markers for user from Datastore. */
+  public List<Marker> getUserMarkers(String user) {
+	  List<Marker> markers = new ArrayList<>();
+	  if(user.equals("null")) {
+		  markers = getMarkers();
+		  return markers;
+	  }
+	  
+	  Query query = new Query("Marker");
+	  PreparedQuery results = datastore.prepare(query);
+	  for (Entity entity : results.asIterable()) {
+  		if(entity.getProperty("userName").equals(user)) {
+  		  double lat = (double) entity.getProperty("lat");
+  	      double lng = (double) entity.getProperty("lng");
+  	      String content = (String) entity.getProperty("content");
+  	      String userName = (String) entity.getProperty("userName");
+  	      String skillLevel = (String) entity.getProperty("skillLevel");
+
+  	      Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+  	      markers.add(marker);
+  		}
+	  }
+	  return markers;
+  }
+  
+
+  /** Stores a marker in Datastore. */
+  public void storeMarker(Marker marker) {
+    Entity markerEntity = new Entity("Marker");
+    markerEntity.setProperty("lat", marker.getLat());
+    markerEntity.setProperty("lng", marker.getLng());
+    markerEntity.setProperty("content", marker.getContent());
+    markerEntity.setProperty("userName", marker.getUserName());
+    markerEntity.setProperty("skillLevel", marker.getSkillLevel());
+
+    datastore.put(markerEntity);
+  }
+  
+  /** Deletes all Markers */
+  public void deleteMarkers() {
+	  List<Marker> markers = new ArrayList<>();
+
+	    Query query = new Query("Marker");
+	    PreparedQuery results = datastore.prepare(query);
+
+	    for (Entity entity : results.asIterable()) {
+	    		Key key = entity.getKey();
+	    		datastore.delete(key);
+	    }
   }
 }
