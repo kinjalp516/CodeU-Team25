@@ -67,8 +67,19 @@ public class MarkerServlet extends HttpServlet {
     User userData = datastore.getUser(user);
     String userName = userData.getEmail(); //if nickname not changed from email, gets error... why?
     String skillLevel = userData.getSkillLevel();
-    
-    Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+    content = userName + " : " + content;
+    String url;
+    if(skillLevel.contains("Beginner")){
+      url = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+    }
+    else if(skillLevel.contains("Intermediate")){
+      url = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+    }
+    else{
+      url = "http://maps.google.com/mapfiles/ms/icons/orange-dot.png";
+    }
+
+    Marker marker = new Marker(lat, lng, content, userName, url);
     datastore.storeMarker(marker);
   }
   
