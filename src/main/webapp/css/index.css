@@ -18,6 +18,12 @@
 	height: 520px;
 }
 
+.css-typing {
+	position: absolute;
+	top: 58rem;
+	left: 10rem;
+}
+
 .section1subtitle {
 	font-size: 40px;
 	color: #9debbf;
@@ -51,7 +57,7 @@
 
 .texts {
 	margin-left:-20px;
-	width:65%;
+	width:38rem;
 }
 
 .section2Text {
@@ -74,9 +80,6 @@
 }
 
 .textResponse{
-    position: absolute;
-    top: 1125px;
-    left: 220px;
     width: 24em;
     margin: 0 auto;
     color: black;
