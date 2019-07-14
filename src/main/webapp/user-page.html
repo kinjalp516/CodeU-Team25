@@ -33,6 +33,7 @@ limitations under the License.
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/search-results-loader.js"></script>
+    <link rel="icon" href="armIcon.png">
   </head>
 
   <body onload="buildUI(); showEditButton(); addLoginOrLogoutLinkToNavigation();">
@@ -49,14 +50,37 @@ limitations under the License.
 
         <div class="search-container">
           <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
-            <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input">
+            <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input" data-toggle="tooltip" title="Search by Nickname, Email or Activity!">
             <button class="my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
       </nav>
-      <div class="pt-3"></div>
-      <h1 id="page-title">User Page</h1>
 
+      <div class="pt-3"></div>
+      <div class="header">
+        <div class="profile-image" onclick="editAvatar()">
+          <img src="images/avatar-placeholder.gif" class="avatar" id="avatar-img">
+          <div class="overlay">
+            <div class="text">Change picture</div>
+          </div>
+        </div>
+        <h1 id="page-title">User Page</h1>
+
+        <form action="/avatar" method="POST" class="form-container" id="change-avatar">
+          <div class="custom-file">
+            <input type="text" placeholder="image URL" id="avatarId" name="avatar">
+            <label for="avatarId">Enter new image's URL</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <script>
+          // Make the name of the file appear on select
+          $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+          });
+        </script>
+      </div>
       <button id="edit-profile" class="edit-button" onclick="editProfile()">Edit profile</button>      
       <hr>
       <div id="activityContainer">
@@ -85,7 +109,7 @@ limitations under the License.
       
         <label for="activity">Select activity:</label>
         <select size="1" class="form-control" id="act" name="activity">
-          <option id="currAct" value="Current Activity">Activity List --</option>
+          <option id="currAct" value="CurrentActivity">Activity List --</option>
           <option value="Gym">Gym</option>
           <option value="Running">Running</option>
           <option value="Yoga">Yoga</option>
@@ -206,14 +230,15 @@ limitations under the License.
   <style>
       #map{
         width: 500px;
-        height: 500px;
+        height: 300px;
       }
     </style>
-    <h1>My Locations</h1>
-    <div id="map"></div>
-    <p>Please click on the location you would like to work out at.</p>
-    <p>Then provide the address in the text box.</p>
-  
+      <h3>My Locations</h3>
+      <div id="map"></div>
+      <p>Please click on the location you would like to work out at.
+        <br/>
+        Then provide the address in the text box.</p>
+      <hr/>
       <form id="message-form" action="/messages" method="POST" class="hidden">
         Enter a new message:
         <br/>
