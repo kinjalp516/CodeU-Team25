@@ -84,6 +84,12 @@ limitations under the License.
     	<artifactId>commonmark</artifactId>
     	<version>0.12.1</version>
   	</dependency>
+
+    <dependency>
+    <groupId>com.google.appengine.tools</groupId>
+    <artifactId>appengine-gcs-client</artifactId>
+    <version>0.7</version>
+    </dependency>
   
   </dependencies>
   

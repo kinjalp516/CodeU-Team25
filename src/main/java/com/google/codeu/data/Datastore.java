@@ -16,6 +16,8 @@
 
 package com.google.codeu.data;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -92,6 +94,7 @@ public class Datastore {
     userEntity.setProperty("activity", user.getActivity());
     userEntity.setProperty("skillLevel", user.getSkillLevel());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+    userEntity.setProperty("avatar", user.getAvatar());
     datastore.put(userEntity);
   }
   
@@ -113,7 +116,9 @@ public class Datastore {
     String activity = (String) userEntity.getProperty("activity");
     String skillLevel = (String) userEntity.getProperty("skillLevel");
     String aboutMe = (String) userEntity.getProperty("aboutMe");
+    String avatar = (String) userEntity.getProperty("avatar");
     User user = new User(email, nickname, activity, skillLevel, aboutMe);
+    user.setAvatar(avatar);
     
     return user;
   }

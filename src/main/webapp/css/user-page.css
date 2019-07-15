@@ -134,9 +134,9 @@
     opacity: 0.8;
   }
 
-  /* Add a red background color to the cancel button */
+  /* Add a red background color to button */
   .form-container textarea {
-    color: #000;
+    color: darkgreen;
     width: 100%;
   }
 
@@ -161,3 +161,50 @@
   #activity {
     color: darkgreen;
   }
+
+  .profile-image {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+  }
+  .header h1 {
+    position: relative;
+    top: 18px;
+    left: 10px;
+    z-index: -1;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #89cca6;
+  }
+  
+  .profile-image:hover .overlay {
+    opacity: 1;
+  }
+  .overlay .text {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+  } 

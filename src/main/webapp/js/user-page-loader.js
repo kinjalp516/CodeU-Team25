@@ -18,10 +18,10 @@
 const urlParams = new URLSearchParams(window.location.search);
 const parameterUsername = urlParams.get('user');
 // Variables to store current values
-var currentNickname;
-var currentActivity;
-var currentSkillLevel;
-var currentAboutMe;
+let currentNickname;
+let currentActivity;
+let currentSkillLevel;
+let currentAboutMe;
 let map;
 
 // URL must include ?user=XYZ parameter. If not, redirect to homepage.
@@ -112,6 +112,7 @@ function buildMessageDiv(message) {
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
+  fetchAvatar();
   showMessageFormIfViewingSelf();
   fetchMessages();
   fetchActivity();
@@ -203,7 +204,28 @@ function editProfile() {
   document.getElementById("nickname").value = currentNickname;  
   document.getElementById("about-me").value = currentAboutMe;
   document.getElementById("currAct").value = currentActivity;
+  document.getElementById("currAct").innerHTML = currentActivity;
   document.getElementById("currLvl").value = currentSkillLevel;  
+}
+
+function editAvatar() {
+  // Show file form
+  document.getElementById("change-avatar").style.display = "block";
+}
+
+function fetchAvatar() {
+  const url = '/avatar?user=' + parameterUsername;
+  fetch(url).then((response) => {
+    return response.text();
+  }).then((avatar) => {
+    const avatarContainer = document.getElementById('avatar-img');
+    if(avatar != ''){
+      avatarContainer.src = avatar;
+    }
+    else {
+      avatarContainer.src = "images/avatar-placeholder.gif";
+    }
+  });
 }
 
 function createMap(){
@@ -243,4 +265,13 @@ var infoWindow = new google.maps.InfoWindow({
 marker.addListener('click', () => {
   infoWindow.open(map, marker);
 });
+}
+
+// Activate tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+function closeForm() {
+  document.getElementById("change-avatar").style.display = "none";
 }
