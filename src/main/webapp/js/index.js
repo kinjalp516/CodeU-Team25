@@ -42,6 +42,8 @@ var TxtType = function(el, toRotate, period) {
     };
 
     window.onload = function() {
+
+    	/** The following code is for the typing animation on the index page */
         var elements = document.getElementsByClassName('typewrite');
         for (var i=0; i<elements.length; i++) {
             var toRotate = elements[i].getAttribute('data-type');
@@ -49,6 +51,8 @@ var TxtType = function(el, toRotate, period) {
             if (toRotate) {
               new TxtType(elements[i], JSON.parse(toRotate), period);
             }
+
+        /** The following code is for the typing animation on the index page */
         }
         // INJECT CSS
         var css = document.createElement("style");

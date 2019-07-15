@@ -18,6 +18,12 @@
 	height: 520px;
 }
 
+.css-typing {
+	position: absolute;
+	top: 67rem;
+	left: 12rem;
+}
+
 .section1subtitle {
 	font-size: 40px;
 	color: #9debbf;
@@ -51,7 +57,8 @@
 
 .texts {
 	margin-left:-20px;
-	width:65%;
+	width: 53rem;
+	height: auto;
 }
 
 .section2Text {
@@ -61,7 +68,7 @@
 }
 
 .section2TextMain {
-	font-size: 110px;
+	font-size: 700%;
 	color: white;
 	font-weight: bold;
 	line-height: 95px;
@@ -74,9 +81,6 @@
 }
 
 .textResponse{
-    position: absolute;
-    top: 1125px;
-    left: 220px;
     width: 24em;
     margin: 0 auto;
     color: black;
@@ -111,7 +115,8 @@
 }
 
 .calendar {
-	width: 50%;
+	width: 48%;
+	height: auto;
 	float: right;
 }
 
