@@ -271,3 +271,7 @@ marker.addListener('click', () => {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+function closeForm() {
+  document.getElementById("change-avatar").style.display = "none";
+}

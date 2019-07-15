@@ -134,9 +134,9 @@
     opacity: 0.8;
   }
 
-  /* Add a red background color to the cancel button */
+  /* Add a red background color to button */
   .form-container textarea {
-    color: #000;
+    color: darkgreen;
     width: 100%;
   }
 
