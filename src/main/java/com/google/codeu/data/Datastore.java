@@ -16,6 +16,8 @@
 
 package com.google.codeu.data;
 
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -24,6 +26,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -91,6 +94,7 @@ public class Datastore {
     userEntity.setProperty("activity", user.getActivity());
     userEntity.setProperty("skillLevel", user.getSkillLevel());
     userEntity.setProperty("aboutMe", user.getAboutMe());
+    userEntity.setProperty("avatar", user.getAvatar());
     datastore.put(userEntity);
   }
   
@@ -112,7 +116,9 @@ public class Datastore {
     String activity = (String) userEntity.getProperty("activity");
     String skillLevel = (String) userEntity.getProperty("skillLevel");
     String aboutMe = (String) userEntity.getProperty("aboutMe");
+    String avatar = (String) userEntity.getProperty("avatar");
     User user = new User(email, nickname, activity, skillLevel, aboutMe);
+    user.setAvatar(avatar);
     
     return user;
   }
@@ -158,17 +164,28 @@ public class Datastore {
     Function that returns a list of users that match the input by email, nickname or activity
   */
   public List<String> searchUsers(String searchInput) {
+    // I declare the list I will use to return the search results
     List<String> users = new ArrayList<>();
+    
+    // Create first query that will look for users by email
     Query queryByEmail = new Query("User")
       .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, searchInput));
     PreparedQuery result = datastore.prepare(queryByEmail);
     Entity userEntity = result.asSingleEntity();
+
+    // If there was no user found with the email entered or the input was not an email
     if(userEntity == null) {
+      // Create second query that will look for users by nickname, since there can be multiple users with same nicknames, I use a list
       Query queryByNickname = new Query("User")
       .setFilter(new Query.FilterPredicate("nickname", FilterOperator.EQUAL, searchInput));
-      result = datastore.prepare(queryByNickname);
-      userEntity = result.asSingleEntity();
-      if (userEntity == null) {
+      List<Entity> results2 = datastore.prepare(queryByNickname).asList(FetchOptions.Builder.withDefaults());;
+      for (Entity userFound : results2) {
+        String email = (String) userFound.getProperty("email");    
+        users.add(email);
+      }
+      
+      // If there was no users found either by email or nickname I now look for users by activity
+      if (results2.isEmpty()) {
         Query queryByActivity = new Query("User")
           .setFilter(new Query.FilterPredicate("activity", FilterOperator.EQUAL, searchInput));
         List<Entity> results = datastore.prepare(queryByActivity).asList(FetchOptions.Builder.withDefaults());
@@ -176,13 +193,84 @@ public class Datastore {
           String email = (String) userFound.getProperty("email");    
           users.add(email);
         }
-        return users;
       }
+      return users;
     }
     
     String email = (String) userEntity.getProperty("email");
     users.add(email);
     return users;
     
+  }
+  
+  /** Fetches markers from Datastore. */
+  public List<Marker> getMarkers() {
+    List<Marker> markers = new ArrayList<>();
+
+    Query query = new Query("Marker");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity entity : results.asIterable()) {
+      double lat = (double) entity.getProperty("lat");
+      double lng = (double) entity.getProperty("lng");
+      String content = (String) entity.getProperty("content");
+      String userName = (String) entity.getProperty("userName");
+      String skillLevel = (String) entity.getProperty("skillLevel");
+
+      Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+      markers.add(marker);
+    }
+    return markers;
+  }
+  
+  /** Fetches markers for user from Datastore. */
+  public List<Marker> getUserMarkers(String user) {
+	  List<Marker> markers = new ArrayList<>();
+	  if(user.equals("null")) {
+		  markers = getMarkers();
+		  return markers;
+	  }
+	  
+	  Query query = new Query("Marker");
+	  PreparedQuery results = datastore.prepare(query);
+	  for (Entity entity : results.asIterable()) {
+  		if(entity.getProperty("userName").equals(user)) {
+  		  double lat = (double) entity.getProperty("lat");
+  	      double lng = (double) entity.getProperty("lng");
+  	      String content = (String) entity.getProperty("content");
+  	      String userName = (String) entity.getProperty("userName");
+  	      String skillLevel = (String) entity.getProperty("skillLevel");
+
+  	      Marker marker = new Marker(lat, lng, content, userName, skillLevel);
+  	      markers.add(marker);
+  		}
+	  }
+	  return markers;
+  }
+  
+
+  /** Stores a marker in Datastore. */
+  public void storeMarker(Marker marker) {
+    Entity markerEntity = new Entity("Marker");
+    markerEntity.setProperty("lat", marker.getLat());
+    markerEntity.setProperty("lng", marker.getLng());
+    markerEntity.setProperty("content", marker.getContent());
+    markerEntity.setProperty("userName", marker.getUserName());
+    markerEntity.setProperty("skillLevel", marker.getSkillLevel());
+
+    datastore.put(markerEntity);
+  }
+  
+  /** Deletes all Markers */
+  public void deleteMarkers() {
+	  List<Marker> markers = new ArrayList<>();
+
+	    Query query = new Query("Marker");
+	    PreparedQuery results = datastore.prepare(query);
+
+	    for (Entity entity : results.asIterable()) {
+	    		Key key = entity.getKey();
+	    		datastore.delete(key);
+	    }
   }
 }

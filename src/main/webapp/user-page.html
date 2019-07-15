@@ -18,6 +18,9 @@ limitations under the License.
 <html>
   <head>
     <title>User Page</title>
+    <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E">
+    </script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
@@ -30,30 +33,55 @@ limitations under the License.
     <script src="/js/user-page-loader.js"></script>
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/search-results-loader.js"></script>
+    <link rel="icon" href="armIcon.png">
   </head>
 
   <body onload="buildUI(); showEditButton();">
     <div class="container-fluid pt-5">
-      <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #FFA07A">
+      <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #89cca6">
         <ul class="navbar-nav" id="navigation">
           <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link font" href="/aboutus.html">About Our Team</a></li>
-          <li class="nav-item"><a class="nav-link font" href="/feed.html">Message Feed</a></li>
-          <li class="nav-item"><a class="nav-link font" href="/community.html">Community Page</a></li>
           <!-- <li class="nav-item"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
+          <li class="nav-item"><a class="nav-link" href="/map.html">Map</a></li>
+          <li class="nav-item"><a class="nav-link" href="/translate.html">Translate</a></li>
           <div class="divider"/>  
         </ul>
 
         <div class="search-container">
           <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
-            <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input">
+            <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input" data-toggle="tooltip" title="Search by Nickname, Email or Activity!">
             <button class="my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
       </nav>
-      <div class="pt-3"></div>
-      <h1 id="page-title">User Page</h1>
 
+      <div class="pt-3"></div>
+      <div class="header">
+        <div class="profile-image" onclick="editAvatar()">
+          <img src="images/avatar-placeholder.gif" class="avatar" id="avatar-img">
+          <div class="overlay">
+            <div class="text">Change picture</div>
+          </div>
+        </div>
+        <h1 id="page-title">User Page</h1>
+
+        <form action="/avatar" method="POST" class="form-container" id="change-avatar">
+          <div class="custom-file">
+            <input type="text" placeholder="image URL" id="avatarId" name="avatar">
+            <label for="avatarId">Enter new image's URL</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn" onclick="closeForm()">Cancel</button>
+        </form>
+        <script>
+          // Make the name of the file appear on select
+          $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+          });
+        </script>
+      </div>
       <button id="edit-profile" class="edit-button" onclick="editProfile()">Edit profile</button>      
       <hr>
       <div id="activityContainer">
@@ -82,7 +110,7 @@ limitations under the License.
       
         <label for="activity">Select activity:</label>
         <select size="1" class="form-control" id="act" name="activity">
-          <option id="currAct" value="Current Activity">Activity List --</option>
+          <option id="currAct" value="CurrentActivity">Activity List --</option>
           <option value="Gym">Gym</option>
           <option value="Running">Running</option>
           <option value="Yoga">Yoga</option>
@@ -112,7 +140,70 @@ limitations under the License.
         <br/>
       </form>
       <hr>
-      
+  <script>
+
+    /* Editable marker that displays when a user clicks in the map. */
+    let editMarker;
+    
+    /** Sends a marker to the backend for saving. */
+    function postMarker(lat, lng, content){
+      const params = new URLSearchParams();
+      params.append('lat', lat);
+      params.append('lng', lng);
+      params.append('content', content);
+      fetch('/markers', {
+        method: 'POST',
+        body: params
+      });
+    }
+    /** Creates a marker that shows a textbox the user can edit. */
+    function createMarkerForEdit(lat, lng){
+      // If we're already showing an editable marker, then remove it.
+      if(editMarker){
+       editMarker.setMap(null);
+      }
+      editMarker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map
+      });
+      const infoWindow = new google.maps.InfoWindow({
+        content: buildInfoWindowInput(lat, lng)
+      });
+      // When the user closes the editable info window, remove the marker.
+      google.maps.event.addListener(infoWindow, 'closeclick', () => {
+        editMarker.setMap(null);
+      });
+      infoWindow.open(map, editMarker);
+    }
+    /** Builds and returns HTML elements that show an editable textbox and a submit button. */
+    function buildInfoWindowInput(lat, lng){
+      const textBox = document.createElement('textarea');
+      const button = document.createElement('button');
+      button.appendChild(document.createTextNode('Submit'));
+      button.onclick = () => {
+        postMarker(lat, lng, textBox.value);
+        createMarkerForDisplay(lat, lng, textBox.value);
+        editMarker.setMap(null);
+      };
+      const containerDiv = document.createElement('div');
+      containerDiv.appendChild(textBox);
+      containerDiv.appendChild(document.createElement('br'));
+      containerDiv.appendChild(button);
+      return containerDiv;
+    }
+  </script>
+  <style>
+      #map{
+        width: 500px;
+        height: 300px;
+      }
+    </style>
+      <h3>My Locations</h3>
+      <div id="map"></div>
+      <p>Please click on the location you would like to work out at.
+        <br/>
+        Then provide the address in the text box.</p>
+      <hr/>
       <form id="message-form" action="/messages" method="POST" class="hidden">
         Enter a new message:
         <br/>

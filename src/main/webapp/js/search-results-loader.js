@@ -1,17 +1,44 @@
+var input; // To store what the user typed in search box
 /** Fetches users found and adds them to the page. */
 function fetchUsersFound(){
-    const url = '/search';
+    if (input == 'none') {
+      list.innerHTML = 'No results found.';
+      return;
+    }
+    const url = '/search?search=' + input;
     fetch(url).then((response) => {
       return response.json();
     }).then((users) => {
       const list = document.getElementById('list');
       list.innerHTML = '';
+      if (users == null || users == '') {
+        list.innerHTML = 'No results found.';
+        return;
+      }
 
       users.forEach((user) => {
         const userListItem = buildUserListItem(user);
         list.appendChild(userListItem);
       });
     });
+  }
+
+/*
+  Functions to get the parameters I previously sent through the URL
+*/
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+  }
+  function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
   }
 
   /**
@@ -40,40 +67,16 @@ function fetchUsersFound(){
     return userListItem;
   }
 
-
+// Send search input through the URL
 function sendInput() {
     var input = document.getElementById("search-input").value;
-    // var GET = {};
-    // var query = window.location.search.substring(1).split("&");
-    // for (var i = 0, max = query.length; i < max; i++)
-    // {
-    //     if (query[i] === "") // check for trailing & with no param
-    //         continue;
-
-    //     var param = query[i].split("=");
-    //     GET[decodeURIComponent(param[0])] = decodeURIComponent(param[1] || "");
-    // }
     input = encodeURIComponent(input);
     window.location.href = "search-results.html?search=" + input;
 }
 
-// function getUrlVars() {
-//     var vars = {};
-//     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-//         vars[key] = value;
-//     });
-//     return vars;
-// }
-
-// function getUrlParam(parameter, defaultvalue){
-//     var urlparameter = defaultvalue;
-//     if(window.location.href.indexOf(parameter) > -1){
-//         urlparameter = getUrlVars()[parameter];
-//         }
-//     return urlparameter;
-// }
-
 function buildSearchPage() {
-    fetchUsersFound();
+  input = getUrlParam('search', 'none');
+  document.getElementById("userInput").innerText = "'" + unescape(input) + "':";
+  fetchUsersFound();
 
 }

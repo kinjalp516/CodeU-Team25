@@ -1,103 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Marker Storage</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E"></script>
-  <script>
-    let map;
-    /* Editable marker that displays when a user clicks in the map. */
-    let editMarker;
-    function createMap(){
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 38.5949, lng: -94.8923},
-        zoom: 4
-      });
-      // When the user clicks in the map, show a marker with a text box the user can edit.
-      map.addListener('click', (event) => {
-        createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
-      });
-      fetchMarkers();
-    }
-    /** Fetches markers from the backend and adds them to the map. */
-    function fetchMarkers(){
-      fetch('/markers').then((response) => {
-        return response.json();
-      }).then((markers) => {
-        markers.forEach((marker) => {
-         createMarkerForDisplay(marker.lat, marker.lng, marker.content)
-        });
-      });
-    }
-    /** Creates a marker that shows a read-only info window when clicked. */
-    function createMarkerForDisplay(lat, lng, content){
-      const marker = new google.maps.Marker({
-        position: {lat: lat, lng: lng},
-        map: map
-      });
-      var infoWindow = new google.maps.InfoWindow({
-        content: content
-      });
-      marker.addListener('click', () => {
-        infoWindow.open(map, marker);
-      });
-    }
-    /** Sends a marker to the backend for saving. */
-    function postMarker(lat, lng, content){
-      const params = new URLSearchParams();
-      params.append('lat', lat);
-      params.append('lng', lng);
-      params.append('content', content);
-      fetch('/markers', {
-        method: 'POST',
-        body: params
-      });
-    }
-    /** Creates a marker that shows a textbox the user can edit. */
-    function createMarkerForEdit(lat, lng){
-      // If we're already showing an editable marker, then remove it.
-      if(editMarker){
-       editMarker.setMap(null);
-      }
-      editMarker = new google.maps.Marker({
-        position: {lat: lat, lng: lng},
-        map: map
-      });
-      const infoWindow = new google.maps.InfoWindow({
-        content: buildInfoWindowInput(lat, lng)
-      });
-      // When the user closes the editable info window, remove the marker.
-      google.maps.event.addListener(infoWindow, 'closeclick', () => {
-        editMarker.setMap(null);
-      });
-      infoWindow.open(map, editMarker);
-    }
-    /** Builds and returns HTML elements that show an editable textbox and a submit button. */
-    function buildInfoWindowInput(lat, lng){
-      const textBox = document.createElement('textarea');
-      const button = document.createElement('button');
-      button.appendChild(document.createTextNode('Submit'));
-      button.onclick = () => {
-        postMarker(lat, lng, textBox.value);
-        createMarkerForDisplay(lat, lng, textBox.value);
-        editMarker.setMap(null);
-      };
-      const containerDiv = document.createElement('div');
-      containerDiv.appendChild(textBox);
-      containerDiv.appendChild(document.createElement('br'));
-      containerDiv.appendChild(button);
-      return containerDiv;
-    }
-  </script>
+  <title>Workout Locations</title>
+  <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/js/navigation-loader.js"></script>
+    <script src="/js/search-results-loader.js"></script>
   <style>
     #map{
       width: 500px;
       height: 500px;
     }
   </style>
-</head>
-<body onload="createMap();">
-  <h1>Marker Storage</h1>
+  </head>
+  <body onload="addLoginOrLogoutLinkToNavigation();">
+  <div class="container-fluid pt-5">	
+
+        <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #89cca6">
+          <ul class="navbar-nav" id="navigation">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link font" href="/aboutus.html">About Our Team</a></li>
+            <!-- <li class="nav-item"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
+            <li class="nav-item active"><a class="nav-link" href="/map.html">Map</a></li>
+            <li class="nav-item"><a class="nav-link" href="/translate.html">Translate</a></li>
+            <div class="divider"/>  
+          </ul>
+  
+          <div class="search-container">
+            <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
+                <input class="mr-sm-2" type="text" placeholder="Search Buddies" id="search-input" data-toggle="tooltip" title="Search by Nickname, Email or Activity!">
+              <button class="my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+        </nav>
+      </br>
+      </br>
+  <h1>Workout Locations</h1>
   <div id="map"></div>
-  <p>Click in the map to create a new marker.</p>
+  <p>Please click on the markers to meet a FitBuddy!</p>
+  <p>Green markers are beginners, Blue are intermediates, and Orange are experts </p>
+  <script>
+    let map;
+    /* Editable marker that displays when a user clicks in the map. */
+    function createMap(){
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 38.5949, lng: -94.8923},
+        zoom: 4
+      });
+      fetchMarkers();
+    }
+    /** Fetches markers from the backend and adds them to the map. */
+    function fetchMarkers(){
+    	  const url = '/markers?user=' + null;
+      fetch(url).then((response) => {
+        return response.json();
+      }).then((markers) => {
+        markers.forEach((marker) => {
+         createMarkerForDisplay(marker.lat, marker.lng, marker.content, marker.skillLevel)
+        });
+      });
+    }
+    /** Creates a marker that shows a read-only info window when clicked. */
+    function createMarkerForDisplay(lat, lng, content, skillLevel){
+      const marker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map,
+        icon: skillLevel
+      });
+      var infoWindow = new google.maps.InfoWindow({
+    	  content: content
+      });
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+      });
+    }
+
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E&callback=createMap">
+  </script>
 </body>
 </html>
