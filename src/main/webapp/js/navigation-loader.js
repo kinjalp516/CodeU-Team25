@@ -103,3 +103,8 @@ function createLink(url, text) {
   linkElement.className = "nav-link font";
   return linkElement;
 }
+
+// listen for whenever the window loads.
+window.addEventListener('load', function() {
+  addLoginOrLogoutLinkToNavigation();
+})
