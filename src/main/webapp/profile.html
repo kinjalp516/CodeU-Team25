@@ -99,16 +99,20 @@ limitations under the License.
 	.nickname {
 		width: 20em;
 		margin-top: 1em;
-		margin-bottom: 2em;
-		padding-top: 2em;
+		margin-bottom: 1em;
+		padding-top: 1em;
 		padding-left: 1em;
-		border-radius: 1em;
+		/* border-radius: 1em; */
+		color: black;
+		font-weight: 700;
+		text-align: left;
 	}
 	
 	.name {
-		font-size: 2.3em;
-		font-weight: 700;
+		font-size: 1.2em;
+		font-weight: 400;
 		line-height: .2em;
+		color: black;
 	}
 	
 	.buddies {
@@ -119,6 +123,7 @@ limitations under the License.
 		font-size: 1.4em;
 		margin-left: 2em;
 		line-height: .5em;
+		color: black;
 	}
 			
   </style>
@@ -151,8 +156,8 @@ limitations under the License.
 			</div>
 			
 			<div class="border nickname">
-				<p class="name">Mike Wazowski</p>
-				<p>mwazowski@monstersinc.com</p>
+				<p id="user-nickname" class="nickname">Mike Wazowski</p>
+				<p id="user-email" class="name">mwazowski@monstersinc.com</p>
 			</div>
 			
 			<p class="subtitle">Buddies</p>
@@ -168,7 +173,12 @@ limitations under the License.
   		</div>
   		
   		<div class="column right">
-  			<p class="subtitle">Activities</p>
+			<p class="subtitle">Activities</p>
+			<div id="activityContainer">
+				<h3>Activity:
+					<span id="activity">User activity</span>
+				</h3>
+			</div>
   			
   			<div class="border buddies">
   			</div>
