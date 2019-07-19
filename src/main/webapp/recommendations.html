@@ -11,9 +11,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/js/navigation-loader.js"></script>
     <script src="/js/search-results-loader.js"></script>
+    <script src="/js/recommendations-loader.js"></script>
     <link rel="icon" href="armIcon.png">
   </head>
-  <body onload="buildSearchPage();">
+  <body onload="buildRecommendationsPage();">
         <div class="container-fluid pt-5">	
     
             <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #89cca6">
@@ -35,11 +36,11 @@
             </nav>
     
           <div class="pt-5" id="content">
-            <h1>Search Results</h1>
-            <p>Users found for</p>
-            <span id="userInput">Your input</span>
+            <div id="activityBuddies">
+                <h3><span id="activity">User activity</span> Buddies</h3>
+            </div>
             <hr/>
-            <ul id="list">Loading...</ul>
+            <ul id="activityBuddiesList">Loading...</ul>
           </div>
       </body>
     </html>

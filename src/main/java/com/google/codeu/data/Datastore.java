@@ -202,6 +202,24 @@ public class Datastore {
     return users;
     
   }
+
+   /*
+    Function that returns a list of users that match the input by email, nickname or activity
+  */
+  public List<String> recommendUsers(String searchInput) {
+    // I declare the list I will use to return the search results
+    List<String> users = new ArrayList<>();
+    // Find users by activity
+    Query queryByActivity = new Query("User")
+      .setFilter(new Query.FilterPredicate("activity", FilterOperator.EQUAL, searchInput));
+    List<Entity> results = datastore.prepare(queryByActivity).asList(FetchOptions.Builder.withDefaults());
+    for (Entity userFound : results) {      
+      String email = (String) userFound.getProperty("email");    
+      users.add(email);      
+    }
+    
+    return users;    
+  }
   
   /** Fetches markers from Datastore. */
   public List<Marker> getMarkers() {

@@ -74,13 +74,6 @@ limitations under the License.
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="reset" class="btn" onclick="closeForm()">Cancel</button>
         </form>
-        <script>
-          // Make the name of the file appear on select
-          $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-          });
-        </script>
       </div>
       <button id="edit-profile" class="edit-button" onclick="editProfile()">Edit profile</button>      
       <hr>
