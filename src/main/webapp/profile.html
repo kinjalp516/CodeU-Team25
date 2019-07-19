@@ -96,19 +96,29 @@ limitations under the License.
 		height: 100%;
 	}
 	
-	.nickname {
+	.nickname-container {
 		width: 20em;
 		margin-top: 1em;
-		margin-bottom: 2em;
-		padding-top: 2em;
+		margin-bottom: 1em;
+		padding-top: 1em;
 		padding-left: 1em;
+		padding-bottom: 1em;
 		border-radius: 1em;
+	}
+
+	.nickname {		
+		font-size: 1.5em;
+		color: black;
+		font-weight: bolder;
+		text-align: left;
 	}
 	
 	.name {
-		font-size: 2.3em;
-		font-weight: 700;
+		font-size: 1em;
+		font-weight: 400;
 		line-height: .2em;
+		color: black;
+		text-align: left;
 	}
 	
 	.buddies {
@@ -119,7 +129,31 @@ limitations under the License.
 		font-size: 1.4em;
 		margin-left: 2em;
 		line-height: .5em;
+		color: black;
 	}
+
+	#activityContainer {
+		color: black;
+		font-weight: bold;
+		font-size: 1.4em;
+		padding:  1em 1em 0em 1em;
+	}
+	#activityContainer #activity{
+		font-weight: normal;
+		color: darkgreen;
+	}
+
+	#skillContainer {
+		color: black;
+		font-weight: bold;
+		font-size: 1.4em;
+		padding:  1em 1em 1em 1em;
+	}
+	#skillContainer #skill-level{
+		font-weight: normal;
+		color: cadetblue;
+	}
+
 			
   </style>
   
@@ -150,9 +184,9 @@ limitations under the License.
 				<img class="tempProfile" src = "https://i.ytimg.com/vi/Jsy2Xj2_0co/maxresdefault.jpg">
 			</div>
 			
-			<div class="border nickname">
-				<p class="name">Mike Wazowski</p>
-				<p>mwazowski@monstersinc.com</p>
+			<div class="border nickname-container">
+				<p id="user-nickname" class="nickname">Mike Wazowski</p>
+				<p id="user-email" class="name">mwazowski@monstersinc.com</p>
 			</div>
 			
 			<p class="subtitle">Buddies</p>
@@ -168,9 +202,15 @@ limitations under the License.
   		</div>
   		
   		<div class="column right">
-  			<p class="subtitle">Activities</p>
-  			
-  			<div class="border buddies">
+			<p class="subtitle">Activities</p>
+			
+			<div class="border">
+				<div id="activityContainer">
+					<h3><span id="activity">User activity</span></h3>
+				</div>
+				<div id="skillContainer">
+					<h3>Skill Level: <span id="skill-level">User Skill Level</span></h3>
+				</div>
   			</div>
   			
 		    <p class="subtitle">My Locations</p>

@@ -36,13 +36,14 @@ function setPageTitle() {
     return response.text();
   }).then((nickname) => {
     if(nickname == ''){
-      document.getElementById('page-title').innerText = parameterUsername;
-      document.title = parameterUsername + ' - User Page';
-      currentNickname = parameterUsername;
+      document.getElementById('user-email').innerText = parameterUsername;
+      document.title = parameterUsername + ' - Profile';
+      currentNickname = '';
     }
     else {
-      document.getElementById('page-title').innerText = nickname;
-      document.title = nickname + ' - User Page';
+      document.getElementById('user-nickname').innerText = nickname;
+      document.getElementById('user-email').innerText = parameterUsername;
+      document.title = nickname + ' - Profile';
       currentNickname = nickname;
     }
   });

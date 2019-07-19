@@ -46,7 +46,7 @@ limitations under the License.
           <!-- <li class="nav-item"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
           <li class="nav-item"><a class="nav-link" href="/map.html">Map</a></li>
           <li class="nav-item"><a class="nav-link" href="/translate.html">Translate</a></li>
-          <li class="nav-item"><a class="nav-link" href="/profile.html">Profile</a></li>
+          <!-- <li class="nav-item"><a class="nav-link" href="/profile.html">Profile</a></li> -->
           <div class="divider"/>  
         </ul>
 
@@ -76,13 +76,6 @@ limitations under the License.
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="reset" class="btn" onclick="closeForm()">Cancel</button>
         </form>
-        <script>
-          // Make the name of the file appear on select
-          $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-          });
-        </script>
       </div>
       <button id="edit-profile" class="edit-button" onclick="editProfile()">Edit profile</button>      
       <hr>
