@@ -165,13 +165,12 @@
   .profile-image {
     float: left;
     position: relative;
+    border-radius: 15%;
     overflow: hidden;
-    border-radius: 50%;
   }
   .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 14em;
+    height: 13em;
     display: block;
   }
   .header h1 {
