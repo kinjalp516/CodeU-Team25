@@ -36,6 +36,7 @@ function setPageTitle() {
     return response.text();
   }).then((nickname) => {
     if(nickname == ''){
+      document.getElementById('user-nickname').innerHTML = parameterUsername;
       document.getElementById('user-email').innerText = parameterUsername;
       document.title = parameterUsername + ' - Profile';
       currentNickname = '';
