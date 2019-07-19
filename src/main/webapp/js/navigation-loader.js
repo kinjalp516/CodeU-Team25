@@ -31,22 +31,22 @@ function addLoginOrLogoutLinkToNavigation() {
       })
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn) {
-          navigationElement.appendChild(
-            createListItem(createLink('/feed.html', 'Message Feed')));
-          navigationElement.appendChild(
-            createListItem(createLink('/community.html', 'Community Page')));
-          navigationElement.appendChild(
-            createListItem(createLink('/recommendations.html?user=' + loginStatus.username, 'Featured')));
-            
+          
           if (window.location.pathname == '/profile.html?user=' + loginStatus.username) {
-              navigationElement.appendChild(createActiveListItem(createLink(
-                '/profile.html?user=' + loginStatus.username, 'Profile')));
+            navigationElement.appendChild(createActiveListItem(createLink(
+              '/profile.html?user=' + loginStatus.username, 'Profile')));
           }
           else {
             navigationElement.appendChild(createListItem(createLink(
               '/profile.html?user=' + loginStatus.username, 'Profile')));
           }          
-
+          navigationElement.appendChild(
+            createListItem(createLink('/feed.html', 'Message Feed')));
+          navigationElement.appendChild(
+            createListItem(createLink('/community.html', 'Community Page')));
+          navigationElement.appendChild(
+            createListItem(createLink('/recommendations.html?user=' + loginStatus.username, 'Buddies')));
+          
           navigationElement.appendChild(
               createListItem(createLink('/logout', 'Logout')));
         } else {
