@@ -4,6 +4,7 @@
 <title>Message Feed</title>
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/user-page.css">
+<link rel="stylesheet" href="/css/feed.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,20 +14,88 @@
 <script src="/js/feed.js"></script>
 <script src="/js/navigation-loader.js"></script>
 <script src="/js/search-results-loader.js"></script>
+<script src="/js/recommendations-loader.js"></script>
+
 <link rel="icon" href="armIcon.png">
 </head>
-<body onload="buildUI();">
+
+<script>
+    let map;
+    /* Editable marker that displays when a user clicks in the map. */
+    function createMap(){
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 38.5949, lng: -94.8923},
+        zoom: 4
+      });
+      fetchMarkers();
+    }
+    /** Fetches markers from the backend and adds them to the map. */
+    function fetchMarkers(){
+    	  const url = '/markers?user=' + null;
+      fetch(url).then((response) => {
+        return response.json();
+      }).then((markers) => {
+        markers.forEach((marker) => {
+         createMarkerForDisplay(marker.lat, marker.lng, marker.content, marker.skillLevel)
+        });
+      });
+    }
+    /** Creates a marker that shows a read-only info window when clicked. */
+    function createMarkerForDisplay(lat, lng, content, skillLevel){
+      const marker = new google.maps.Marker({
+        position: {lat: lat, lng: lng},
+        map: map,
+        icon: skillLevel
+      });
+      var infoWindow = new google.maps.InfoWindow({
+    	  content: content
+      });
+      marker.addListener('click', () => {
+        infoWindow.open(map, marker);
+      });
+    }
+
+	/** Fetches users and adds them to the page. */
+      function fetchUserList(){
+        const url = '/user-list';
+        fetch(url).then((response) => {
+          return response.json();
+        }).then((users) => {
+          const list = document.getElementById('list');
+          list.innerHTML = '';
+
+          users.forEach((user) => {
+            const userListItem = buildUserListItem(user);
+            list.appendChild(userListItem);
+          });
+        });
+      }
+
+      /**
+        * Builds a list element that contains a link to a user page, e.g.
+        * <li><a href="/user-page.html?user=test@example.com">test@example.com</a></li>
+        */
+      function buildUserListItem(user){
+        const userLink = document.createElement('a');
+        userLink.setAttribute('href', '/profile.html?user=' + user);
+        userLink.appendChild(document.createTextNode(user));
+        const userListItem = document.createElement('li');
+        userListItem.appendChild(userLink);
+        return userListItem;
+      }
+
+  </script>
+  
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKK0F_x99qM2kfXHn9hNMxUqenT8CNa-E&callback=createMap">
+  </script>
+  
+
+<body onload="buildUI(); buildRecommendationsPage();">
   <div class="container-fluid pt-5">	
   
     <nav class="navbar navbar-expand-sm navbar-light fixed-top justify-content-between" style="background-color: #89cca6">
-      <ul class="navbar-nav" id="navigation">
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link font" href="/aboutus.html">About Our Team</a></li>
-        <!-- <li class="nav-item"><a class="nav-link font" href="/sentiment.html">Sentiment</a></li>      -->
-        <li class="nav-item"><a class="nav-link" href="/map.html">Map</a></li>
-        <li class="nav-item"><a class="nav-link" href="/translate.html">Translate</a></li>
-        <div class="divider"/>  
-      </ul>
+      <ul class="navbar-nav" id="navigation"></ul>
 
       <div class="search-container">
         <form class="form-inline" action="javascript:;" onsubmit="sendInput()" id="search-form">
@@ -36,11 +105,35 @@
       </div>
     </nav>
 
-    <div class="pt-5" id="content">
-      <h1>Message Feed</h1>
-      <hr/>
-      <div id="message-container">Loading...</div>
-    </div>
+	<div class="row">
+	  <div class="columnFeed leftFeed">
+	  
+	      <p class="subtitle">Buddy Workout Locations</p>
+	      <div id="map"></div>
+	    
+	    <div class="topBuddies">
+	   	  <p class="subtitle">Top Buddies</p>
+	   	  <ul id="list">Loading...</ul>
+	   	</div>  
+	   	  
+	   	  <p class="subtitle">Recommended Buddies</p>
+	   	  
+	   	  <div class="rec" id="content">
+            <div id="userCards"></div>
+          </div>
+          
+	  </div>
+	  
+	  <div class="columnFeed middleFeed">
+	  
+	    <div class="pt-5" id="content">
+      	<p class="subtitle">Fitbuddy Feed</p>
+      		<div id="message-container">Loading...</div>
+    	</div>
+    	
+	  </div>
+	</div>
+	
   </div>
 </body>
 </html>

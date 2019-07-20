@@ -3,7 +3,7 @@
 }
 
 body {
-	background-color: #f3f3f3ff;
+	background-color: #f3f3f3ff !important;
 	max-width: 100%;
 		overflow-x: hidden;
 		font-family: 'Roboto', sans-serif;
@@ -48,7 +48,7 @@ body {
 	border: .09em solid #bab9b9;
 	overflow: hidden;
 	margin-bottom: 1em;
-	background-color: white;
+	background-color: #e8eeea;
 }
 
 .profilePicture {
@@ -64,6 +64,7 @@ body {
 }
 
 .nickname-container {
+	background-color: #e8eeea;
 	width: 20em;
 	margin-top: 1em;
 	margin-bottom: 1em;
@@ -99,6 +100,10 @@ body {
 	font-weight: bold;
 }
 
+#about-me-container {
+	padding: 1em;
+}
+
 #activityContainer {
 	color: black;
 	font-weight: bold;
@@ -119,7 +124,7 @@ body {
 }
 #skillContainer #skill-level{
 	font-weight: normal;
-	color: cadetblue;
+	color: darkgreen;
 }
 
 /* Set the size of the message input to be 100 pixels high
@@ -133,7 +138,7 @@ and will fill the width of its parent element. */
 .message-div {
   border: .09em solid #9da3a0;
   border-radius: 5px;
-  margin-top: 20px;
+  margin-top: 8px;
   overflow: hidden;
   background-color: white;
 }

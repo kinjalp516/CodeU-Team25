@@ -37,9 +37,10 @@ nav li {
 }
 
 .navbar input[type=text] {
-  padding: 6px;
+  padding: 10px;
   margin-top: 8px;
   font-size: 17px;
+  border-radius: 1em;
   border: none;
 }
 
@@ -58,6 +59,7 @@ nav li {
 .polaroid {
 	display: flex;
     width: 3000px;
+    margin-top: 10px;
     margin-bottom: -20px;
 }
     	
@@ -74,6 +76,7 @@ figure.heading {
     width: 220px;
     margin-top: 10px;
     margin-right: 60px;
+    text-align: center;
 }
     	
 img.photoKinjal {
@@ -95,7 +98,7 @@ img.photoKinjal {
 }
 
 .divider{
-    width:10px;
+    width:12px;
     height:auto;
     display:inline-block;
 }
@@ -121,3 +124,9 @@ img.photoKinjal {
   float: left;
   width: 25%;
 }
+
+figcaption.caption {
+	font-family: 'Just Me Again Down Here', cursive;
+    font-size: 27px;
+    text-align: center;
+} 

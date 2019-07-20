@@ -42,11 +42,16 @@ function addLoginOrLogoutLinkToNavigation() {
           }          
           navigationElement.appendChild(
             createListItem(createLink('/feed.html', 'Message Feed')));
-          navigationElement.appendChild(
-            createListItem(createLink('/community.html', 'Community Page')));
+          
           navigationElement.appendChild(
             createListItem(createLink('/recommendations.html?user=' + loginStatus.username, 'Buddies')));
           
+          navigationElement.appendChild(
+            createListItem(createLink('/map.html?user=' + loginStatus.username, 'Map')));
+
+          navigationElement.appendChild(
+            createListItem(createLink('/aboutus.html?user=' + loginStatus.username, 'Our Team')));
+
           navigationElement.appendChild(
               createListItem(createLink('/logout', 'Logout')));
         } else {
