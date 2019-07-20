@@ -115,3 +115,8 @@ function createLink(url, text) {
 window.addEventListener('load', function() {
   addLoginOrLogoutLinkToNavigation();
 })
+
+// Activate tooltips
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
