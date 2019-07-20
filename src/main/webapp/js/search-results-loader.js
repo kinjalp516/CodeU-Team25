@@ -47,7 +47,7 @@ function fetchUsersFound(){
     */
   function buildUserListItem(user){
     const userLink = document.createElement('a');
-    userLink.setAttribute('href', '/user-page.html?user=' + user);
+    userLink.setAttribute('href', '/profile.html?user=' + user);
 
     const url = '/nickname?user=' + user;
     fetch(url).then((response) => {
