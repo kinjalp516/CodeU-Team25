@@ -76,6 +76,6 @@ public class NicknameServlet extends HttpServlet {
     }
 
     datastore.storeUser(user);
-    response.sendRedirect("/user-page.html?user=" + userEmail);
+    response.sendRedirect("/profile.html?user=" + userEmail);
   }
 }

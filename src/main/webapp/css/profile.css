@@ -1,3 +1,256 @@
 .profilePicture {
 	background-color: red;
 }
+
+body {
+	background-color: #f3f3f3ff;
+	max-width: 100%;
+		overflow-x: hidden;
+		font-family: 'Roboto', sans-serif;
+}
+
+* {
+	  box-sizing: border-box;
+}
+
+/* Create three unequal columns that floats next to each other */
+.columnProfile {
+  float: left;
+  padding-top: 3.8em;
+}
+
+
+.left, .right {
+  width: 25%;
+  padding-left: 2.5em;
+}
+
+.right {
+  width: 35%;
+  padding-left: 2.5em;
+  padding-right: 2.5em;
+}
+
+.middle {
+  width: 40%;
+  padding-left: 2.5em;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.border {
+	border-radius: .25em;
+	border: .09em solid #bab9b9;
+	overflow: hidden;
+	margin-bottom: 1em;
+	background-color: white;
+}
+
+.profilePicture {
+	background-color: white;
+	height: 20em;
+	width: 20em;
+	margin-top: 1.5em;
+	position: relative;
+}
+
+.tempProfile {
+	height: 100%;
+}
+
+.nickname-container {
+	width: 20em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+	border-radius: .4em;
+}
+
+.nickname {		
+	font-size: 1.5em;
+	color: black;
+	font-weight: bolder;
+	text-align: left;
+}
+
+.name {
+	font-size: 1em;
+	font-weight: 400;
+	line-height: .2em;
+	color: black;
+	text-align: left;
+}
+
+.about {
+	height: 400px;
+}
+
+.subtitle {
+	font-size: 1.4em;
+	line-height: .5em;
+	color: black;
+	font-weight: bold;
+}
+
+#activityContainer {
+	color: black;
+	font-weight: bold;
+	font-size: 1.4em;
+	padding:  1em 1em 0em 1em;
+}
+
+#activityContainer #activity{
+	font-weight: normal;
+	color: darkgreen;
+}
+
+#skillContainer {
+	color: black;
+	font-weight: bold;
+	font-size: 1.4em;
+	padding:  1em 1em 1em 1em;
+}
+#skillContainer #skill-level{
+	font-weight: normal;
+	color: cadetblue;
+}
+
+/* Set the size of the message input to be 100 pixels high
+and will fill the width of its parent element. */
+#message-input {
+  height: 100px;
+  width: 100%;
+}
+
+/* Give each message a rounded border. */
+.message-div {
+  border: .09em solid #9da3a0;
+  border-radius: 5px;
+  margin-top: 20px;
+  overflow: hidden;
+  background-color: white;
+}
+
+/* Add a bottom border to the message header. */
+.message-header {
+  border-bottom: .09em solid #9da3a0;
+  padding: 5px;
+}
+
+/* Give the message body a margin so the text
+   isn't too close to the border. */
+.message-body {
+  padding: 5px;
+}
+
+/* Use this to hide certain elements like forms if the
+   user is not logged in or viewing their own page. */
+.hidden {
+  display: none;
+}
+
+/* Used to edit the size of the images when posted in message feed */
+.message-body img {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  max-width: 25%;
+  border-radius: 15px;
+  border-width: 1px;
+  border-color: #ECEAEA;
+}
+
+/* Used to edit the size of the youtube videos when posted in message feed */
+.message-body iframe {
+	margin-top: 15px;
+	  margin-bottom: 15px;
+	  width: 350px;
+	height: 200px;
+}
+
+#map{
+	width: 100%;
+	height: 100%;
+}
+
+/* Add styles to the form container */
+.form-container {
+	display: none;
+	max-width: 500px;
+	padding: 10px;
+	background-color: #b4dbc5;
+}
+
+.form-container .btn {
+	background-color: 	#333333;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	margin-bottom:10px;
+	opacity: 0.8;
+}
+
+/* Add a red background color to button */
+.form-container textarea {
+    color: darkgreen;
+    width: 100%;
+  }
+
+  /* Add some hover effects to buttons */
+  .form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+  }
+
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	border-radius: .25em;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: #89cca6;
+	display: none;
+}
+
+.profilePicture:hover .overlay {
+	opacity: 1;
+}
+
+.overlay .text {
+	text-align: center;
+    color: white;
+    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+/* Button used to open the contact form */
+.edit-button {
+    display: none;
+    background-color: #89cca6;
+    color: darkgreen;
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 0.8;
+    position: relative;
+	margin-bottom: 1em;
+	margin-right: 1em;
+	float: right;
+}

@@ -188,8 +188,16 @@ function showEditButton() {
       .then((loginStatus) => {
         if (loginStatus.isLoggedIn &&
             loginStatus.username == parameterUsername) {
-          const editButton = document.getElementById('edit-profile');
-          editButton.style.display = "block";
+          const editPicture = document.getElementById('overlayId');
+          const editName = document.getElementById('editNickname');
+          const editAbout = document.getElementById('editAboutMe');
+          const editActivity = document.getElementById('editActivity');
+          const editLevel = document.getElementById('editLevel');
+          editPicture.style.display = "block";
+          editName.style.display = "block";
+          editAbout.style.display = "block";
+          editActivity.style.display = "block";
+          editLevel.style.display = "block";
         }
       });
 }
@@ -211,8 +219,18 @@ function editProfile() {
 }
 
 function editAvatar() {
-  // Show file form
-  document.getElementById("change-avatar").style.display = "block";
+  fetch('/login-status')
+    .then((response) => {
+      return response.json();
+    })
+    .then((loginStatus) => {
+      if (loginStatus.isLoggedIn &&
+          loginStatus.username == parameterUsername) {
+          // Show file form
+          document.getElementById("change-avatar").style.display = "block";
+      }
+    });
+
 }
 
 function fetchAvatar() {
@@ -220,7 +238,7 @@ function fetchAvatar() {
   fetch(url).then((response) => {
     return response.text();
   }).then((avatar) => {
-    const avatarContainer = document.getElementById('avatar-img');
+    const avatarContainer = document.getElementById('profile-img');
     if(avatar != ''){
       avatarContainer.src = avatar;
     }
@@ -274,6 +292,42 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
 
-function closeForm() {
+function editNickname() {
+  document.getElementById("change-name").style.display = "block";
+  document.getElementById("editNickname").style.display = "none";
+}
+
+function editAboutMe() {
+  document.getElementById("change-about").style.display = "block";
+  document.getElementById("editAboutMe").style.display = "none";
+}
+
+function editActivity() {
+  document.getElementById("change-activity").style.display = "block";
+  document.getElementById("editActivity").style.display = "none";
+}
+
+function editLevel() {
+  document.getElementById("change-level").style.display = "block";
+  document.getElementById("editLevel").style.display = "none";
+}
+
+function closePictureForm() {
   document.getElementById("change-avatar").style.display = "none";
+}
+
+function closeNameForm() {
+  document.getElementById("change-name").style.display = "none";
+}
+
+function closeAboutForm() {
+  document.getElementById("change-about").style.display = "none";
+}
+
+function closeActivityForm() {
+  document.getElementById("change-activity").style.display = "none";
+}
+
+function closeSkillForm() {
+  document.getElementById("change-level").style.display = "none";
 }
