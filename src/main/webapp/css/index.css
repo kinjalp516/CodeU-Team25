@@ -152,3 +152,24 @@
 .section4 {
 	padding: 50px;
 }
+
+.figure.heading {
+    width: 220px;
+    margin-top: 10px;
+    margin-right: 60px;
+}
+
+.polaroid {
+	display: flex;
+    width: 3000px;
+    margin-bottom: -20px;
+}
+    	
+ figure.polaroidSquare {
+    width: 220px;
+  	background-color: white;
+  	box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  	margin-bottom: 50px;
+  	margin-right: 60px;
+  	padding: 15px;
+}

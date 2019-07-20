@@ -26,12 +26,14 @@
   border: thin solid black;
   border-radius: 5px;
   margin-top: 20px;
+  overflow: hidden;
 }
 
 /* Add a bottom border to the message header. */
 .message-header {
   border-bottom: thin solid black;
   padding: 5px;
+  background-color: #e8eeea;
 }
 
 /* Give the message body a margin so the text
@@ -155,7 +157,7 @@
   }
 
   #skill-level {
-    color: cadetblue;
+    color: darkgreen;
   }
 
   #activity {
