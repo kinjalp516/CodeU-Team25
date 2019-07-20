@@ -116,3 +116,8 @@ img.photoKinjal {
   display: table;
   clear: both;
 }
+
+.card {
+  float: left;
+  width: 25%;
+}
