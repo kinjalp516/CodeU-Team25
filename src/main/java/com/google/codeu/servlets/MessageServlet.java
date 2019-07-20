@@ -166,7 +166,7 @@ public class MessageServlet extends HttpServlet {
     	datastore.storeMessage(message);
     }
     
-    response.sendRedirect("/user-page.html?user=" + user);
+    response.sendRedirect("/profile.html?user=" + user);
     
   }
 }
