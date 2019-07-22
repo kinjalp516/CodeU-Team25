@@ -98,3 +98,17 @@
   .activity-div {
 	  font-size: 1em;
   }
+
+  .card {
+	  width: 10em !important;
+	  height: 20em !important;
+  }
+
+  .card-img-top {
+	height: 10em;
+	width: 10em;
+  }
+
+  .card-title {
+	  font-size: 12px !important;
+  }

@@ -20,7 +20,7 @@ function fetchUsersFound(){
         if (user != parameterUsername) {
           var card = document.createElement("div");
           card.className = "card";
-          card.style = "width:400px";
+          card.style = "width:300px";
 
           var image = document.createElement("img");
           image.className = "card-img-top";
@@ -40,7 +40,7 @@ function fetchUsersFound(){
           var cardBody = document.createElement("div");
           cardBody.className = "card-body";
 
-          var cardTitle = document.createElement("h4");
+          var cardTitle = document.createElement("div");
           cardTitle.className = "card-title";
           const url2 = '/nickname?user=' + user;
           fetch(url2).then((response) => {
