@@ -27,11 +27,13 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
@@ -42,12 +44,34 @@ public class Datastore {
     datastore = DatastoreServiceFactory.getDatastoreService();
   }
 
+   /**
+   * Converts list of strings to list of UUIDs.
+   */
+  public static List<UUID> convertStringsToUuids(List<String> uuidStrings) {
+    if (uuidStrings == null) {
+      return null;
+    }
+    return uuidStrings.stream().map(UUID::fromString).collect(Collectors.toList());
+  }
+
+  /**
+   * Converts list of UUIDs to list of strings.
+   */
+  public static List<String> convertUuidsToStrings(List<UUID> uuids) {
+    if (uuids == null) {
+      return null;
+    }
+    return uuids.stream().map(UUID::toString).collect(Collectors.toList());
+  }
+
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
     Entity messageEntity = new Entity("Message", message.getId().toString());
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
     messageEntity.setProperty("timestamp", message.getTimestamp());
+    messageEntity.setProperty("commentIDsAsStrings", convertUuidsToStrings(message.getCommentIDs()));
+    messageEntity.setProperty("likeEmails", message.getLikeEmails());
 
     datastore.put(messageEntity);
   }
@@ -291,4 +315,174 @@ public class Datastore {
 	    		datastore.delete(key);
 	    }
   }
+
+  /**
+   * @param messageId
+   * @return Message corresponding to the given id
+   */
+  public Message getMessage(String messageId) throws Exception {
+    Entity entity = datastore.get(KeyFactory.createKey("Message", messageId));
+    return convertMessageFromEntity(entity);
+  }
+
+  public Message convertMessageFromEntity(Entity entity) throws Exception {
+    String idString = entity.getKey().getName();
+    UUID id = UUID.fromString(idString);
+    String user = (String) entity.getProperty("user");
+    long timestamp = (long) entity.getProperty("timestamp");
+    String text = (String) entity.getProperty("text");
+    Message message = new Message(id, user, text, timestamp);
+
+    if (entity.hasProperty("commentIDsAsStrings")) {
+      message.setCommentIDs(convertStringsToUuids(
+              (List<String>) entity.getProperty("commentIDsAsStrings")
+      ));
+    }
+
+    if (entity.hasProperty("likeEmails")) {
+      message.setLikeEmails((List<String>) entity.getProperty("likeEmails"));
+    }
+
+    return message;
+  }
+
+  public void addComment(String messageID, Comment comment) {
+    try {
+      // Add new comment ID to message.
+      Message message = getMessage(messageID);
+      List<UUID> commentIDs = message.getCommentIDs();
+
+      if (commentIDs == null) {
+        commentIDs = new ArrayList<>();
+      }
+      commentIDs.add(comment.getId());
+      message.setCommentIDs(commentIDs);
+      storeMessage(message);
+
+      // Store comment in Datastore.
+      storeComment(comment);
+    } catch (Exception e) {
+      System.err.println("Error adding comment to message.");
+      System.err.println(comment.toString());
+      e.printStackTrace();
+    }
+  }
+
+  /*
+    Stores comment in datastore
+  */
+  public void storeComment(Comment comment) {
+    Entity commentEntity = new Entity("Comment", comment.getId().toString());
+    commentEntity.setProperty("user", comment.getUser());
+    commentEntity.setProperty("text", comment.getText());
+    commentEntity.setProperty("timestamp", comment.getTimestamp());
+
+    datastore.put(commentEntity);
+  }
+
+  /**
+   * Gets comments posted on a specific message.
+   * @return list of comments on a message
+   */
+  public List<Comment> getCommentsForMessage(String messageId) {
+    List<Comment> commentsForMessage = new ArrayList<>();
+
+    try {
+      Message message = getMessage(messageId);
+      if (message.getCommentIDs() == null || message.getCommentIDs().isEmpty()) {
+        return commentsForMessage;
+      }
+
+      List<Key> keysForComments = new ArrayList<>();
+      for (String commentID: convertUuidsToStrings(message.getCommentIDs())) {
+        keysForComments.add(KeyFactory.createKey("Comment", commentID));
+      }
+
+      Query query = new Query("Comment")
+              .setFilter(new Query.FilterPredicate(
+                      Entity.KEY_RESERVED_PROPERTY,
+                      FilterOperator.IN,
+                      keysForComments)
+              );
+
+      PreparedQuery results = datastore.prepare(query);
+      commentsForMessage = convertCommentsFromQuery(results);
+    } catch (Exception e) {
+      System.err.println("Error getting comments for message.");
+      e.printStackTrace();
+    }
+
+    return commentsForMessage;
+  }
+
+  /**
+   * Convert query to comments.
+   */
+  public List<Comment> convertCommentsFromQuery(PreparedQuery results) {
+    List<Comment> comments = new ArrayList<>();
+
+    for (Entity entity: results.asIterable()) {
+      try {
+        Comment comment = convertCommentFromEntity(entity);
+        comments.add(comment);
+      } catch (Exception e) {
+        System.err.println("Error reading comment.");
+        System.err.println(entity.toString());
+        e.printStackTrace();
+      }
+    }
+
+    return comments;
+  }
+
+  /**
+   * Converts message entity to Comment.
+   */
+  public Comment convertCommentFromEntity(Entity entity) {
+    String commentIDString = entity.getKey().getName();
+    UUID commentID = UUID.fromString(commentIDString);
+    String user = (String) entity.getProperty("user");
+    long timestamp = (long) entity.getProperty("timestamp");
+    String text = (String) entity.getProperty("text");
+
+    Comment comment = new Comment(commentID, user, text, timestamp);
+
+    return comment;
+  }
+
+  /**
+   * Adds the email of the user who just liked the message.
+   */
+  public void addLikedUserEmailToMessage(String email, String messageID) {
+    try {
+      // Add ID of the user who just liked the message.
+      Message message = getMessage(messageID);
+      List<String> likeEmails = message.getLikeEmails();
+
+      if (likeEmails == null) {
+        likeEmails = new ArrayList<>();
+      }
+
+      message.setLikeEmails(toggleStringInList(likeEmails, email));
+      storeMessage(message);
+
+    } catch (Exception e) {
+      System.err.println("Error adding user who liked to message.");
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Add or remove a string in a list.
+   */
+  public static List<String> toggleStringInList(List<String> list, String element) {
+    if (list.contains(element)) {
+      list.remove(element);
+    } else {
+      list.add(element);
+    }
+    return list;
+  }
+
+
 }

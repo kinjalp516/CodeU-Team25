@@ -46,6 +46,7 @@ public class AvatarServlet extends HttpServlet {
     User userData = datastore.getUser(user);
 
     if(userData == null || userData.getAvatar() == null) {
+      response.getOutputStream().println("/images/avatar-placeholder.gif");
       return;
     }
 
