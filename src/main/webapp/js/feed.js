@@ -269,7 +269,7 @@ function buildCommentInput(messageID) {
                                             type="button" 
                                             id="comment-post-button-${messageID}"
                                             onclick="onClickCommentPostButton('${messageID}');">
-                                            Post
+                                            Add
                                     </button>
                                   </div>
                                 </div>
