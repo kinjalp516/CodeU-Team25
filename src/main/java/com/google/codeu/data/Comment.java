@@ -17,35 +17,28 @@
 package com.google.codeu.data;
 
 import java.util.UUID;
-import java.util.*;
 
 /** A single message posted by a user. */
-public class Message {
+public class Comment {
 
   private UUID id;
   private String user;
   private String text;
   private long timestamp;
-  private List<UUID> commentIDs;
-  private List<String> likeEmails;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
-  public Message(String user, String text) {
+  public Comment(String user, String text) {
     this(UUID.randomUUID(), user, text, System.currentTimeMillis());
   }
 
-  public Message(UUID id, String user, String text, long timestamp) {
+  public Comment(UUID id, String user, String text, long timestamp) {
     this.id = id;
     this.user = user;
     this.text = text;
     this.timestamp = timestamp;
-  }
-
-  public Message() {
-    this(null, null, null, System.currentTimeMillis());
   }
 
   public UUID getId() {
@@ -62,21 +55,5 @@ public class Message {
 
   public long getTimestamp() {
     return timestamp;
-  }
-
-  public List<UUID> getCommentIDs() {
-    return commentIDs;
-  }
-
-  public List<String> getLikeEmails() {
-    return likeEmails;
-  }
-
-  public void setCommentIDs(List<UUID> commentIDs) {
-    this.commentIDs = commentIDs;
-  }
-
-  public void setLikeEmails(List<String> likeEmails) {
-    this.likeEmails = likeEmails;
   }
 }

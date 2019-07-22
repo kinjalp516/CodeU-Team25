@@ -45,3 +45,70 @@
 	padding: 1em;
 	background-color: #e8eeea;
 }
+
+.response-container {
+	display: block;
+}
+
+.comment-input-container {
+	margin-left: -0.15em;
+  }
+  
+  .input-group> textarea {
+	resize: none;
+	overflow: hidden;
+	min-height: 32px;
+	height: 32px;
+	max-height: 100px;
+  }
+  
+  .comment-image {
+	object-fit: cover;
+	width: 32px;
+	height: 32px;
+  }
+
+  .comment-username {
+	font-size: 1em;
+	color: black;
+	font-weight: bold;
+  }
+  
+  .comment-time-container {
+	line-height: normal;
+  }
+  
+  .comment-text {
+	font-size: 1em;
+  }
+
+  .response-container {
+	font-size: 0.85em;
+  }
+  
+  .reaction-icon {
+	line-height: 1.2em;
+	font-size: 1.2em;
+  }
+  
+  .action-container > * {
+	width: 48%;
+  }
+
+  .activity-div {
+	  font-size: 1em;
+  }
+
+  .card {
+	  width: 10em !important;
+	  height: 20em !important;
+  }
+
+  .card-img-top {
+	height: 10em;
+	width: 10em;
+  }
+
+  .card-title {
+	  font-size: 12px !important;
+  }
