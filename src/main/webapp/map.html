@@ -13,9 +13,54 @@
     <link rel="icon" href="armIcon.png">
   <style>
     #map{
-      width: 500px;
-      height: 500px;
+      width: 100%;
+      height: 100%;
     }
+    
+    * {
+  box-sizing: border-box;
+}
+
+	/* Create two equal columns that floats next to each other */
+	.columnMap {
+	  height: 44em;
+	  float: left;
+	}
+	
+	.leftMap {
+	  width: 65%;
+	}
+	
+	.rightMap {
+		width: 35%;
+		padding: 2em;
+	}
+	
+	/* Clear floats after the columns */
+	.row:after {
+	  content: "";
+	  display: table;
+	  clear: both;
+	}
+	
+	.subtitle {
+		font-size: 3em;
+		line-height: 1em;
+		color: black;
+		font-weight: bold;
+	}
+	
+	.level {
+		font-size: 1.5em;
+		line-height: 1em;
+		color: black;
+		font-weight: bold;
+	}
+	
+	table, tr, td {
+		padding: .5em;
+	}
+	
   </style>
   </head>
   <body>
@@ -31,12 +76,33 @@
             </form>
           </div>
         </nav>
-      </br>
-      </br>
-  <h1>Workout Locations</h1>
-  <div id="map"></div>
-  <p>Please click on the markers to meet a FitBuddy!</p>
-  <p>Green markers are beginners, Blue are intermediates, and Orange are experts </p>
+
+<br>
+  <div class="row">
+	  <div class="columnMap leftMap">
+	      <div id="map"></div>
+	  </div>
+	  <div class="columnMap rightMap">
+	      <h1 class="subtitle">Workout Locations</h1>
+		  <p>Please click on the markers to meet a FitBuddy!</p>
+		  
+		  <table>
+			  <tr>
+			    <td><img height="90em" src="http://www.clker.com/cliparts/8/6/U/z/k/o/google-maps-marker-for-residencelamontagne-hi.png"></td>
+			    <td class="level">Beginner</td>
+			  </tr>
+			  <tr>
+			    <td><img height="90em" src="http://www.clker.com/cliparts/e/i/N/V/q/J/map-marker-soft-orange-2-hi.png"></td>
+			    <td class="level">Intermediate</td>
+			  </tr>
+			  <tr>
+			    <td><img height="90em" src="http://www.clker.com/cliparts/l/g/L/A/A/C/blue-marker-black-border-fit.svg"></td>
+			    <td class="level">Expert</td>
+			  </tr>
+			</table>
+	  </div>
+  </div>
+
   <script>
     let map;
     /* Editable marker that displays when a user clicks in the map. */
