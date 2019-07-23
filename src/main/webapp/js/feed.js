@@ -52,11 +52,15 @@ function fetchMessages(){
   
 function buildMessageDiv(message){
   const usernameDiv = document.createElement('div');
-  usernameDiv.classList.add("left-align", "font-weight-bold");  
+  usernameDiv.classList.add("left-align", "font-weight-bold");
+  const usernameLink = document.createElement('a')
   usernameDiv.id = 'username';
   getUsername(message.user).then((username) => {
-    usernameDiv.appendChild(document.createTextNode(username));
+    usernameLink.innerHTML = username;
   });
+  usernameLink.href = "/profile.html?user=" + message.user;
+  usernameLink.style.color = "#000000";
+  usernameDiv.appendChild(usernameLink);
   
   const activityDiv = document.createElement('div');
   activityDiv.classList.add("left-align", "activity-div", "text-muted");
@@ -284,12 +288,12 @@ function buildCommentItem(comment) {
   return getUsername(comment.user).then(username => getUserAvatarUrl(comment.user)
     .then((userProfileUrl) => {
       const commentHtml = `<li class="media">
-            <a class="mr-3 my-2" href="/user-page.html?user=${comment.user}">
+            <a class="mr-3 my-2" href="/profile.html?user=${comment.user}">
               <img src="${userProfileUrl}" class="comment-image rounded-circle" alt="...">
             </a>
             <div class="media-body">
               <div class="d-flex justify-content-between mt-1">
-                <a href="/user-page.html?user=${comment.user}"><p class="mb-0 font-weight-normal comment-username">${username}</p></a>
+                <a href="/profile.html?user=${comment.user}"><p class="mb-0 font-weight-normal comment-username">${username}</p></a>
                 <p class="card-text mb-0 comment-time-container">
                   <small class="text-muted">${getTimeText(comment.timestamp)}</small>  
                 </p>
